@@ -52,9 +52,7 @@ if (!prefersReducedMotion.matches && heroVisual && heroImage && heroCard) {
 
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-  contactForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+  contactForm.addEventListener('submit', () => {
     alert('Thanks for reaching out! I will respond within 48 hours.');
-    contactForm.reset();
   });
 }
