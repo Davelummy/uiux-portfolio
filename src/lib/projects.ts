@@ -110,7 +110,8 @@ const PROJECTS: Project[] = [
       foreground: "#ffffff"
     },
     coverImageUrl: "/projects/voices-unbroken.jpg",
-    figmaEmbed: null,
+    figmaEmbed:
+      "https://embed.figma.com/proto/VqIXa8Hf2hpx0Con2YpSfJ/Voices-Unbroken?page-id=0%3A1&node-id=125-11721&viewport=-1237%2C662%2C0.32&scaling=scale-down&content-scaling=fixed&starting-point-node-id=125%3A11721&show-proto-sidebar=1&embed-host=share",
     isFeatured: true,
     isPublished: true,
     sortOrder: 2,
