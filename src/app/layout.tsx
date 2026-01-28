@@ -90,7 +90,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
               <div className="text-muted md:text-right">
                 <p>Available for full-time roles, contracts, and collaborations.</p>
-                <p className="mt-1">Davidolumide123@gmail.com</p>
+                <a
+                  href="mailto:Davidolumide123@gmail.com"
+                  className="mt-2 block transition hover:text-ink"
+                >
+                  Davidolumide123@gmail.com
+                </a>
+                <a
+                  href="https://wa.me/2349063723298"
+                  className="mt-1 block transition hover:text-ink"
+                >
+                  WhatsApp: +234 906 372 3298
+                </a>
+                <a
+                  href="https://www.behance.net/davelummy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 block transition hover:text-ink"
+                >
+                  Behance: davelummy
+                </a>
               </div>
             </div>
           </footer>
