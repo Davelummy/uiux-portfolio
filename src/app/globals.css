@@ -2,16 +2,16 @@
 @import "tailwindcss";
 
 :root {
-  --color-paper: #f7f6f2;
-  --color-ink: #0f172a;
-  --color-ink-soft: #1f2937;
-  --color-muted: #6b7280;
-  --color-accent: #2563eb;
-  --color-accent-strong: #1d4ed8;
+  --color-paper: #fff4ea;
+  --color-ink: #0b1420;
+  --color-ink-soft: #1d2a3a;
+  --color-muted: #5c6b7a;
+  --color-accent: #ff5b2e;
+  --color-accent-strong: #ff2f00;
   --color-surface: #ffffff;
-  --color-border: rgba(15, 23, 42, 0.12);
-  --color-shadow: rgba(15, 23, 42, 0.12);
-  --color-focus: #1d4ed8;
+  --color-border: rgba(11, 20, 32, 0.14);
+  --color-shadow: rgba(11, 20, 32, 0.18);
+  --color-focus: #00b3ff;
   --radius-card: 20px;
   --radius-pill: 999px;
 }
@@ -23,9 +23,10 @@ html {
 body {
   min-height: 100%;
   background:
-    radial-gradient(1200px 600px at 12% -10%, #e7ecff 0%, transparent 60%),
-    radial-gradient(1000px 600px at 90% 0%, #fff1d7 0%, transparent 55%),
-    #f7f6f2;
+    radial-gradient(900px 500px at 10% -15%, rgba(0, 194, 255, 0.35) 0%, transparent 60%),
+    radial-gradient(900px 500px at 95% 0%, rgba(255, 122, 89, 0.35) 0%, transparent 55%),
+    radial-gradient(800px 500px at 50% 110%, rgba(255, 230, 109, 0.4) 0%, transparent 60%),
+    #fff4ea;
   color: var(--color-ink);
   font-family: var(--font-sans), "Helvetica Neue", Helvetica, sans-serif;
   position: relative;
