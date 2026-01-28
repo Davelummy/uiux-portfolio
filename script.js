@@ -1,6 +1,11 @@
 document.documentElement.classList.remove('no-js');
 document.documentElement.classList.add('js');
 
+const yearNode = document.getElementById('year');
+if (yearNode) {
+  yearNode.textContent = new Date().getFullYear();
+}
+
 const revealTargets = document.querySelectorAll('[data-reveal]');
 const supportsIntersectionObserver = 'IntersectionObserver' in window;
 
