@@ -32,6 +32,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <div className="page-shell">
+          <div className="ambient-orbs" aria-hidden="true">
+            <span className="orb orb-one" />
+            <span className="orb orb-two" />
+            <span className="orb orb-three" />
+          </div>
           <header className="sticky top-0 z-20 border-b border-border bg-white/80 backdrop-blur">
             <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
               <Link href="/" className="flex items-center gap-3">

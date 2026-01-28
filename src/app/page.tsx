@@ -127,7 +127,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="card overflow-hidden animate-fade-in">
+        <div className="card overflow-hidden animate-fade-in animate-float">
           {heroProject ? (
             <>
               <div className="p-6 text-white" style={getCoverStyle(heroProject)}>
@@ -360,7 +360,7 @@ export default async function Home() {
       </section>
 
       <section className="mt-20">
-        <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center">
+        <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float">
           <p className="eyebrow">Next Project</p>
           <h2 className="text-3xl font-semibold sm:text-4xl">
             Ready to design your next release?

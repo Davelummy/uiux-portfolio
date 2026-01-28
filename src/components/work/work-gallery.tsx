@@ -396,7 +396,7 @@ export default function WorkGallery({ projects }: Props) {
       </section>
 
           <section className="mt-20">
-            <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center">
+            <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float">
               <p className="eyebrow">Next Step</p>
               <h2 className="text-3xl font-semibold sm:text-4xl">
                 Want to explore a design partnership?
