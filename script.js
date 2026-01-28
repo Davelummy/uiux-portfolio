@@ -1,20 +1,30 @@
-const revealTargets = document.querySelectorAll('[data-reveal]');
+document.documentElement.classList.remove('no-js');
+document.documentElement.classList.add('js');
 
-const revealOnScroll = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal');
-        observer.unobserve(entry.target);
+const revealTargets = document.querySelectorAll('[data-reveal]');
+const supportsIntersectionObserver = 'IntersectionObserver' in window;
+
+const revealOnScroll = supportsIntersectionObserver
+  ? new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
       }
-    });
-  },
-  {
-    threshold: 0.2,
-  }
-);
+    )
+  : null;
 
 revealTargets.forEach((target, index) => {
+  if (!supportsIntersectionObserver) {
+    target.classList.add('reveal');
+    return;
+  }
   target.style.transitionDelay = `${index * 0.08}s`;
   revealOnScroll.observe(target);
 });
@@ -50,9 +60,57 @@ if (!prefersReducedMotion.matches && heroVisual && heroImage && heroCard) {
   });
 }
 
+const menuToggle = document.querySelector('.menu-toggle');
+const siteHeader = document.querySelector('.site-header');
+const navLinks = document.querySelectorAll('.nav a');
+
+if (menuToggle && siteHeader) {
+  const menuLabel = menuToggle.querySelector('.menu-toggle-label');
+  const setMenuState = (isOpen) => {
+    siteHeader.classList.toggle('is-open', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.classList.toggle('nav-open', isOpen);
+    if (menuLabel) {
+      menuLabel.textContent = isOpen ? 'Close' : 'Menu';
+    }
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = siteHeader.classList.contains('is-open');
+    setMenuState(!isOpen);
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (siteHeader.classList.contains('is-open')) {
+        setMenuState(false);
+      }
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!siteHeader.classList.contains('is-open')) {
+      return;
+    }
+    if (!siteHeader.contains(event.target)) {
+      setMenuState(false);
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setMenuState(false);
+    }
+  });
+}
+
 const contactForm = document.querySelector('.contact-form');
+const contactStatus = document.querySelector('.form-status');
 if (contactForm) {
   contactForm.addEventListener('submit', () => {
-    alert('Thanks for reaching out! I will respond within 48 hours.');
+    if (contactStatus) {
+      contactStatus.textContent = 'Thanks for reaching out! I will respond within 48 hours.';
+      contactStatus.hidden = false;
+    }
   });
 }
