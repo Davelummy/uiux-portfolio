@@ -31,9 +31,17 @@ export default function ContactPage() {
         }
       });
 
-      const response = await fetch("/", {
+      const urlParams = new URLSearchParams();
+      formData.forEach((value, key) => {
+        if (typeof value === "string") {
+          urlParams.append(key, value);
+        }
+      });
+
+      const response = await fetch("/__forms.html", {
         method: "POST",
-        body: formData
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: urlParams.toString()
       });
 
       if (!response.ok) {
