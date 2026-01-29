@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -12,6 +13,7 @@ type FormValues = {
 };
 
 export default function ContactPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -50,6 +52,7 @@ export default function ContactPage() {
 
       setStatus("success");
       reset();
+      router.push("/contact/thanks");
     } catch {
       setStatus("error");
     }
@@ -107,6 +110,7 @@ export default function ContactPage() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <input type="hidden" name="form-name" value="contact" />
+            <input type="hidden" name="redirect" value="/contact/thanks" />
             <input type="hidden" {...register("bot-field")} />
             <div className="grid gap-2">
               <label
