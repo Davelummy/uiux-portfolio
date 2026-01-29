@@ -8,7 +8,7 @@ export default function AboutPage() {
             Designing with clarity, empathy, and real product intent.
           </h1>
           <p className="mt-4 text-muted">
-            I'm David Olumide Daniel, an Abuja-based UI/UX designer focused on
+            I&apos;m David Olumide Daniel, an Abuja-based UI/UX designer focused on
             translating product goals into clear, user-centered experiences.
             My work blends research, interaction design, and visual craft to
             create interfaces that feel confident and easy to use.

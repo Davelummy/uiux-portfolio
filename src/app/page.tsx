@@ -1,23 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Compass, Gauge, LayoutGrid } from "lucide-react";
-import type { Project } from "@/lib/projects";
 import { getProjects } from "@/lib/projects";
-
-function getCoverStyle(project: Project) {
-  if (project.coverImageUrl) {
-    return {
-      backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0.8)), url(${project.coverImageUrl})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: project.cover.foreground
-    };
-  }
-
-  return {
-    background: project.cover.background,
-    color: project.cover.foreground
-  };
-}
+import { getCoverStyle } from "@/lib/utils/image-utils";
 
 const services = [
   {
@@ -130,19 +115,48 @@ export default async function Home() {
         <div className="card overflow-hidden animate-fade-in animate-float">
           {heroProject ? (
             <>
-              <div className="p-6 text-white" style={getCoverStyle(heroProject)}>
-                <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                  Featured Case Study
-                </p>
-                <h2 className="mt-3 text-2xl font-semibold">
-                  {heroProject.title}
-                </h2>
-                <p className="mt-2 text-sm text-white/80">
-                  {heroProject.summary ?? heroProject.overview}
-                </p>
-                {heroMeta ? (
-                  <p className="mt-4 text-xs text-white/70">{heroMeta}</p>
+              <div
+                className="relative overflow-hidden"
+                style={
+                  heroProject.coverImageUrl ? undefined : getCoverStyle(heroProject)
+                }
+              >
+                {heroProject.coverImageUrl ? (
+                  <>
+                    <Image
+                      src={heroProject.coverImageUrl}
+                      alt={heroProject.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover"
+                      placeholder={heroProject.blurDataUrl ? "blur" : "empty"}
+                      blurDataURL={heroProject.blurDataUrl ?? undefined}
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
+                  </>
                 ) : null}
+                <div
+                  className="relative z-10 p-6"
+                  style={
+                    heroProject.coverImageUrl
+                      ? { color: heroProject.cover.foreground }
+                      : undefined
+                  }
+                >
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                    Featured Case Study
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold">
+                    {heroProject.title}
+                  </h2>
+                  <p className="mt-2 text-sm text-white/80">
+                    {heroProject.summary ?? heroProject.overview}
+                  </p>
+                  {heroMeta ? (
+                    <p className="mt-4 text-xs text-white/70">{heroMeta}</p>
+                  ) : null}
+                </div>
               </div>
               <div className="p-6">
                 <p className="text-sm text-muted">{heroProject.overview}</p>
@@ -336,7 +350,7 @@ export default async function Home() {
             A collaborative designer for product teams.
           </h2>
           <p className="mt-4 text-muted">
-            I'm David Olumide Daniel, an Abuja-based UI/UX designer focused on
+            I&apos;m David Olumide Daniel, an Abuja-based UI/UX designer focused on
             mobile and web interfaces. I partner with founders and product teams
             to clarify direction, build intuitive UX, and ship consistent UI
             systems.

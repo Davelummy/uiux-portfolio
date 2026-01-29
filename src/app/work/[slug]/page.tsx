@@ -1,26 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/lib/projects";
 import { getProjectBySlug, getProjects } from "@/lib/projects";
+import { getCoverStyle } from "@/lib/utils/image-utils";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 type Props = {
   params: { slug: string } | Promise<{ slug: string }>;
 };
 
-function getCoverStyle(project: Project) {
-  if (project.coverImageUrl) {
-    return {
-      backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0.8)), url(${project.coverImageUrl})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: project.cover.foreground
-    };
-  }
+export async function generateMetadata({
+  params
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const project = await getProjectBySlug(params.slug, true);
+  const title = project?.title ?? "Project";
+  const description =
+    project?.summary ?? project?.overview ?? "UI/UX Design Case Study";
+  const image = project?.coverImageUrl ?? "/og-image.jpg";
 
   return {
-    background: project.cover.background,
-    color: project.cover.foreground
+    title: `${title} | David Olumide`,
+    description,
+    openGraph: {
+      title: `${title} | David Olumide`,
+      description,
+      images: [image]
+    }
   };
 }
 
@@ -71,17 +79,43 @@ export default async function WorkDetailPage({ params }: Props) {
         </div>
 
         <div className="card overflow-hidden">
-          <div className="p-6 text-white" style={getCoverStyle(project)}>
-            <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-              Case Study
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold">{clientLabel}</h2>
-            <p className="mt-2 text-sm text-white/80">
-              {project.summary ?? project.overview}
-            </p>
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/70">
-              {project.year}
-            </p>
+          <div
+            className="relative overflow-hidden"
+            style={project.coverImageUrl ? undefined : getCoverStyle(project)}
+          >
+            {project.coverImageUrl ? (
+              <>
+                <Image
+                  src={project.coverImageUrl}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover"
+                  placeholder={project.blurDataUrl ? "blur" : "empty"}
+                  blurDataURL={project.blurDataUrl ?? undefined}
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
+              </>
+            ) : null}
+            <div
+              className="relative z-10 p-6"
+              style={
+                project.coverImageUrl
+                  ? { color: project.cover.foreground }
+                  : undefined
+              }
+            >
+              <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                Case Study
+              </p>
+              <h2 className="mt-3 text-2xl font-semibold">{clientLabel}</h2>
+              <p className="mt-2 text-sm text-white/80">
+                {project.summary ?? project.overview}
+              </p>
+              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/70">
+                {project.year}
+              </p>
+            </div>
           </div>
           <div className="p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -251,14 +285,42 @@ export default async function WorkDetailPage({ params }: Props) {
                 href={`/work/${item.slug}`}
                 className="card group flex h-full flex-col overflow-hidden transition hover:-translate-y-1"
               >
-                <div className="p-6 text-white" style={getCoverStyle(item)}>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                    {item.category}
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold">{item.title}</h3>
-                  <p className="mt-2 text-sm text-white/80">
-                    {item.summary ?? item.overview}
-                  </p>
+                <div
+                  className="relative overflow-hidden"
+                  style={item.coverImageUrl ? undefined : getCoverStyle(item)}
+                >
+                  {item.coverImageUrl ? (
+                    <>
+                      <Image
+                        src={item.coverImageUrl}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover"
+                        placeholder={item.blurDataUrl ? "blur" : "empty"}
+                        blurDataURL={item.blurDataUrl ?? undefined}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
+                    </>
+                  ) : null}
+                  <div
+                    className="relative z-10 p-6"
+                    style={
+                      item.coverImageUrl
+                        ? { color: item.cover.foreground }
+                        : undefined
+                    }
+                  >
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                      {item.category}
+                    </p>
+                    <h3 className="mt-3 text-2xl font-semibold">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/80">
+                      {item.summary ?? item.overview}
+                    </p>
+                  </div>
                 </div>
                 <div className="flex h-full flex-col gap-4 p-6">
                   <div className="flex items-center justify-between text-xs text-muted">

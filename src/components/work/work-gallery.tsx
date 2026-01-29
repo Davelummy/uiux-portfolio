@@ -1,33 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, LayoutGrid, LayoutList, Search } from "lucide-react";
 import type { Project } from "@/lib/projects";
+import { getCoverStyle } from "@/lib/utils/image-utils";
 
 type ViewMode = "grid" | "list";
 
 type Props = {
   projects: Project[];
 };
-
-function getCoverStyle(project: Project) {
-  if (project.coverImageUrl) {
-    return {
-      backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0.8)), url(${project.coverImageUrl})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      color: project.cover.foreground
-    };
-  }
-
-  return {
-    background: project.cover.background,
-    color: project.cover.foreground
-  };
-}
 
 function matchesQuery(project: Project, query: string) {
   if (!query) return true;
@@ -354,20 +340,45 @@ export default function WorkGallery({ projects }: Props) {
                   >
                     <div
                       className={clsx(
-                        "p-6 text-white",
+                        "relative overflow-hidden",
                         viewMode === "list" ? "lg:w-[45%]" : ""
                       )}
-                      style={getCoverStyle(project)}
+                      style={
+                        project.coverImageUrl ? undefined : getCoverStyle(project)
+                      }
                     >
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                        {project.category}
-                      </p>
-                      <h3 className="mt-3 text-2xl font-semibold">
-                        {project.title}
-                      </h3>
-                      <p className="mt-2 text-sm text-white/80">
-                        {project.summary ?? project.overview}
-                      </p>
+                      {project.coverImageUrl ? (
+                        <>
+                          <Image
+                            src={project.coverImageUrl}
+                            alt={project.title}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            className="object-cover"
+                            placeholder={project.blurDataUrl ? "blur" : "empty"}
+                            blurDataURL={project.blurDataUrl ?? undefined}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
+                        </>
+                      ) : null}
+                      <div
+                        className="relative z-10 p-6"
+                        style={
+                          project.coverImageUrl
+                            ? { color: project.cover.foreground }
+                            : undefined
+                        }
+                      >
+                        <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                          {project.category}
+                        </p>
+                        <h3 className="mt-3 text-2xl font-semibold">
+                          {project.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-white/80">
+                          {project.summary ?? project.overview}
+                        </p>
+                      </div>
                     </div>
                     <div className="flex h-full flex-1 flex-col gap-4 p-6">
                       <div className="flex items-center justify-between text-xs text-muted">

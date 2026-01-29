@@ -37,6 +37,7 @@ export type Project = {
   tags: string[];
   cover: ProjectCover;
   coverImageUrl: string | null;
+  blurDataUrl: string | null;
   figmaEmbed: string | null;
   isFeatured: boolean;
   isPublished: boolean;
@@ -44,6 +45,9 @@ export type Project = {
   createdAt: string;
   updatedAt: string;
 };
+
+const BLUR_DATA_URL =
+  "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNCIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzLz48cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZWVlOGVmIi8+PC9zdmc+";
 
 const PROJECTS: Project[] = [
   {
@@ -110,6 +114,7 @@ const PROJECTS: Project[] = [
       foreground: "#ffffff"
     },
     coverImageUrl: "/projects/voices-unbroken.jpg",
+    blurDataUrl: BLUR_DATA_URL,
     figmaEmbed:
       "https://embed.figma.com/proto/VqIXa8Hf2hpx0Con2YpSfJ/Voices-Unbroken?page-id=0%3A1&node-id=125-11721&viewport=-1237%2C662%2C0.32&scaling=scale-down&content-scaling=fixed&starting-point-node-id=125%3A11721&show-proto-sidebar=1&embed-host=share",
     isFeatured: true,
@@ -182,6 +187,7 @@ const PROJECTS: Project[] = [
       foreground: "#ffffff"
     },
     coverImageUrl: "/projects/riggs-pharmaceuticals.jpg",
+    blurDataUrl: BLUR_DATA_URL,
     figmaEmbed:
       "https://embed.figma.com/proto/7HY70zXNqb9PrmLsr2r3AF/RIGGS-PHARMACEUTICALS?node-id=2658-15946&p=f&viewport=358%2C569%2C0.04&t=VZYs82GDdK120I8N-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1381%3A27595&show-proto-sidebar=1&embed-host=share",
     isFeatured: false,
@@ -203,6 +209,8 @@ function sortProjects(projects: Project[]) {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 }
+
+export const projects = PROJECTS;
 
 export async function getProjects(options?: {
   publishedOnly?: boolean;
