@@ -44,7 +44,7 @@ export default function ContactPage() {
         body: urlParams.toString()
       });
 
-      if (!response.ok) {
+      if (response.status >= 400) {
         throw new Error("Form submission failed");
       }
 
