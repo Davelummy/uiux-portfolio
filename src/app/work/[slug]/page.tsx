@@ -122,6 +122,23 @@ export default async function WorkDetailPage({ params }: Props) {
               Project Snapshot
             </p>
             <dl className="mt-4 grid gap-4 text-sm">
+              {project.behanceUrl ? (
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.2em] text-muted">
+                    Behance
+                  </dt>
+                  <dd className="mt-2">
+                    <a
+                      href={project.behanceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-accent transition hover:text-ink"
+                    >
+                      View presentation
+                    </a>
+                  </dd>
+                </div>
+              ) : null}
               <div>
                 <dt className="text-xs uppercase tracking-[0.2em] text-muted">
                   Role
@@ -265,6 +282,21 @@ export default async function WorkDetailPage({ params }: Props) {
                 allowFullScreen
               />
             </div>
+          </div>
+        ) : project.behanceUrl ? (
+          <div className="card mt-4 p-6">
+            <p className="text-sm text-muted">
+              Prototype preview available on Behance.
+            </p>
+            <a
+              href={project.behanceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
+            >
+              View Behance presentation
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
           </div>
         ) : (
           <div className="card mt-4 p-6">

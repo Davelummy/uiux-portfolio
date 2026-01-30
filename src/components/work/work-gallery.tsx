@@ -393,9 +393,21 @@ export default function WorkGallery({ projects }: Props) {
                           </span>
                         ))}
                       </div>
-                      <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-ink">
-                        View case study
-                        <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                      <div className="mt-auto flex flex-wrap items-center gap-3 text-sm font-semibold text-ink">
+                        <span className="inline-flex items-center gap-2">
+                          View case study
+                          <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                        </span>
+                        {project.behanceUrl ? (
+                          <a
+                            href={project.behanceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-semibold text-accent transition hover:text-ink"
+                          >
+                            Behance presentation
+                          </a>
+                        ) : null}
                       </div>
                     </div>
                   </Link>
