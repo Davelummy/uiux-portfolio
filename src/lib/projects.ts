@@ -189,7 +189,7 @@ const PROJECTS: Project[] = [
     coverImageUrl: "/projects/riggs-pharmaceuticals.jpg",
     blurDataUrl: BLUR_DATA_URL,
     figmaEmbed:
-      "https://embed.figma.com/proto/7HY70zXNqb9PrmLsr2r3AF/RIGGS-PHARMACEUTICALS?node-id=2658-15946&p=f&viewport=358%2C569%2C0.04&t=VZYs82GDdK120I8N-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1381%3A27595&show-proto-sidebar=1&embed-host=share",
+      "https://embed.figma.com/proto/7HY70zXNqb9PrmLsr2r3AF/RIGGS-PHARMACEUTICALS?page-id=1343%3A6067&node-id=1343-6099&viewport=633%2C1586%2C0.16&scaling=scale-down&content-scaling=fixed&starting-point-node-id=1381%3A27595&show-proto-sidebar=1&embed-host=share",
     isFeatured: false,
     isPublished: true,
     sortOrder: 1,
