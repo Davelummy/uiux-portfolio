@@ -2,6 +2,11 @@ import "./globals.css";
 import { ReactNode } from "react";
 import Link from "next/link";
 import { Manrope, Sora } from "next/font/google";
+import {
+  BehanceIcon,
+  MailIcon,
+  WhatsAppIcon
+} from "@/components/ui/social-icons";
 
 const displayFont = Sora({
   subsets: ["latin"],
@@ -97,22 +102,25 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <p>Available for full-time roles, contracts, and collaborations.</p>
                 <a
                   href="mailto:Davidolumide123@gmail.com"
-                  className="mt-2 block transition hover:text-ink"
+                  className="mt-2 inline-flex items-center gap-2 transition hover:text-ink"
                 >
+                  <MailIcon className="h-4 w-4" />
                   Davidolumide123@gmail.com
                 </a>
                 <a
                   href="https://wa.me/2349063723298"
-                  className="mt-1 block transition hover:text-ink"
+                  className="mt-1 inline-flex items-center gap-2 transition hover:text-ink"
                 >
+                  <WhatsAppIcon className="h-4 w-4" />
                   WhatsApp: +234 906 372 3298
                 </a>
                 <a
                   href="https://www.behance.net/davelummy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 block transition hover:text-ink"
+                  className="mt-1 inline-flex items-center gap-2 transition hover:text-ink"
                 >
+                  <BehanceIcon className="h-4 w-4" />
                   Behance: davelummy
                 </a>
               </div>

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { MailIcon, WhatsAppIcon } from "@/components/ui/social-icons";
 
 type FormValues = {
   name: string;
@@ -76,8 +77,9 @@ export default function ContactPage() {
               <p className="text-xs uppercase tracking-[0.2em] text-muted">Email</p>
               <a
                 href="mailto:Davidolumide123@gmail.com"
-                className="mt-2 inline-block text-lg font-semibold text-ink"
+                className="mt-2 inline-flex items-center gap-2 text-lg font-semibold text-ink"
               >
+                <MailIcon className="h-5 w-5" />
                 Davidolumide123@gmail.com
               </a>
             </div>
@@ -86,8 +88,9 @@ export default function ContactPage() {
               <p className="mt-2 text-sm text-muted">
                 <a
                   href="https://wa.me/2349063723298"
-                  className="font-semibold text-ink"
+                  className="inline-flex items-center gap-2 font-semibold text-ink"
                 >
+                  <WhatsAppIcon className="h-4 w-4" />
                   +234 906 372 3298
                 </a>
               </p>

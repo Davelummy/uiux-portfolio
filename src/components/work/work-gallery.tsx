@@ -8,6 +8,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, LayoutGrid, LayoutList, Search } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
+import { BehanceIcon } from "@/components/ui/social-icons";
 
 type ViewMode = "grid" | "list";
 
@@ -403,8 +404,9 @@ export default function WorkGallery({ projects }: Props) {
                             href={project.behanceUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs font-semibold text-accent transition hover:text-ink"
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink"
                           >
+                            <BehanceIcon className="h-3.5 w-3.5" />
                             Behance presentation
                           </a>
                         ) : null}

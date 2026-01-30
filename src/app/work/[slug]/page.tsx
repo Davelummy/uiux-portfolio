@@ -5,6 +5,7 @@ import { getProjectBySlug, getProjects } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { BehanceIcon } from "@/components/ui/social-icons";
 
 type Props = {
   params: { slug: string } | Promise<{ slug: string }>;
@@ -132,8 +133,9 @@ export default async function WorkDetailPage({ params }: Props) {
                       href={project.behanceUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-semibold text-accent transition hover:text-ink"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
                     >
+                      <BehanceIcon className="h-4 w-4" />
                       View presentation
                     </a>
                   </dd>
@@ -294,6 +296,7 @@ export default async function WorkDetailPage({ params }: Props) {
               rel="noopener noreferrer"
               className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
             >
+              <BehanceIcon className="h-4 w-4" />
               View Behance presentation
               <ArrowUpRight className="h-4 w-4" />
             </a>
