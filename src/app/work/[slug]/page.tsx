@@ -273,8 +273,28 @@ export default async function WorkDetailPage({ params }: Props) {
       </section>
 
       <section id="preview" className="section-anchor mt-12">
-        <p className="eyebrow">Design Preview</p>
-        {project.figmaEmbed ? (
+        <p className="eyebrow">Project Link</p>
+        {project.liveUrl ? (
+          <div className="card mt-4 p-8 flex flex-col items-center justify-center text-center gap-4 bg-white/60">
+            <div className="h-16 w-16 rounded-full bg-accent/10 flex items-center justify-center">
+              <ArrowUpRight className="h-8 w-8 text-accent" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-semibold">View Live Project</h3>
+              <p className="mt-2 text-sm text-muted max-w-md mx-auto text-balance">
+                Experience the live version of {project.title} deployed in production.
+              </p>
+            </div>
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary mt-2"
+            >
+              Visit Website
+            </a>
+          </div>
+        ) : project.figmaEmbed ? (
           <div className="card mt-4 overflow-hidden">
             <div className="aspect-video">
               <iframe
@@ -304,7 +324,7 @@ export default async function WorkDetailPage({ params }: Props) {
         ) : (
           <div className="card mt-4 p-6">
             <p className="text-sm text-muted">
-              Design preview available upon request.
+              Project preview available upon request.
             </p>
           </div>
         )}
