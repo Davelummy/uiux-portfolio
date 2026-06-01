@@ -52,6 +52,83 @@ const BLUR_DATA_URL =
 
 const PROJECTS: Project[] = [
   {
+    id: "kasada-mvp",
+    slug: "kasada-mvp",
+    title: "Kasada MVP",
+    client: "Kasada",
+    year: "2024",
+    category: "E-Commerce Platform",
+    role: "Product Designer & Developer",
+    duration: "8 weeks",
+    tools: ["React", "Vite", "Tailwind CSS", "Firebase", "Three.js", "Paystack"],
+    team: "Solo designer and developer",
+    summary:
+      "A premium e-commerce platform for bespoke furniture and artisanal pieces, featuring AR visualization and multi-vendor capabilities.",
+    overview:
+      "Designed and developed a comprehensive marketplace for Kasada that connects customers with premium furniture makers. The platform includes seamless checkout, an artisan seller portal, B2B services, and an Augmented Reality (AR) viewer to visualize furniture in real spaces.",
+    problem:
+      "Kasada needed to establish trust for high-ticket bespoke furniture purchases online, requiring an immersive shopping experience and a robust backend to handle artisan onboarding and complex multi-vendor logistics.",
+    goals: [
+      "Create a premium, trust-building visual aesthetic for high-end furniture.",
+      "Implement AR visualization to reduce purchase hesitation.",
+      "Build a scalable seller portal for artisans to manage their inventory.",
+      "Integrate local payment solutions (Paystack) for seamless checkout."
+    ],
+    responsibilities: [
+      "End-to-end UX/UI design of the customer storefront and artisan dashboard.",
+      "Full-stack development using React, Firebase, and Tailwind CSS.",
+      "Integrated 3D model viewer and AR capabilities using Three.js and Google Model Viewer.",
+      "Implemented secure payment processing via Paystack."
+    ],
+    approach: [
+      {
+        title: "Immersive Commerce",
+        detail:
+          "Prioritized high-quality imagery, clean typography, and WebXR-powered AR to replicate the premium showroom experience in a digital space."
+      },
+      {
+        title: "Two-Sided Architecture",
+        detail:
+          "Separated the frontend into distinct consumer and seller experiences, ensuring complex vendor inventory management didn't clutter the shopping flow."
+      },
+      {
+        title: "Seamless Transactions",
+        detail:
+          "Integrated Paystack and Firebase to handle secure, instantaneous payment verification and order state management."
+      }
+    ],
+    solution:
+      "A fully functional React/Firebase MVP that allows users to discover, visualize in AR, and purchase premium furniture, while empowering artisans to manage their own storefronts.",
+    outcome:
+      "Delivered a production-ready MVP capable of onboarding sellers and processing real transactions, complete with an innovative AR shopping feature.",
+    highlights: [
+      "Augmented Reality (AR) product visualization.",
+      "Dedicated portal for artisans/sellers.",
+      "B2B and Bespoke service inquiry flows.",
+      "Paystack integration for the Nigerian/African market."
+    ],
+    metrics: [
+      { value: "Web", label: "Platform" },
+      { value: "E-Commerce", label: "Industry" },
+      { value: "React/Firebase", label: "Stack" },
+      { value: "Live MVP", label: "Status" }
+    ],
+    tags: ["Product Design", "E-Commerce", "Full-Stack", "AR/3D"],
+    cover: {
+      background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
+      foreground: "#ffffff"
+    },
+    coverImageUrl: "/projects/kasada-mvp.png",
+    blurDataUrl: BLUR_DATA_URL,
+    behanceUrl: null,
+    figmaEmbed: null,
+    isFeatured: true,
+    isPublished: true,
+    sortOrder: 4,
+    createdAt: "2024-05-15",
+    updatedAt: "2026-06-01"
+  },
+  {
     id: "crystalline-max",
     slug: "crystalline-max",
     title: "Crystalline Max",
