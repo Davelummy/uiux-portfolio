@@ -9,6 +9,7 @@ import { ArrowUpRight, LayoutGrid, LayoutList, Search } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
 import { BehanceIcon } from "@/components/ui/social-icons";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 type ViewMode = "grid" | "list";
 
@@ -103,20 +104,22 @@ export default function WorkGallery({ projects }: Props) {
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
-      <header className="max-w-3xl">
-        <p className="eyebrow">Work</p>
-        <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
-          Case studies that show strategy, craft, and results.
-        </h1>
-        <p className="mt-4 text-muted">
-          Explore projects that highlight UX problem-solving, visual craft, and
-          scalable design systems.
-        </p>
-      </header>
+      <FadeIn direction="up">
+        <header className="max-w-3xl">
+          <p className="eyebrow">Work</p>
+          <h1 className="mt-3 text-4xl font-semibold sm:text-5xl text-balance">
+            Case studies that show strategy, craft, and results.
+          </h1>
+          <p className="mt-4 text-muted text-balance">
+            Explore projects that highlight UX problem-solving, visual craft, and
+            scalable design systems.
+          </p>
+        </header>
+      </FadeIn>
 
       {projects.length === 0 ? (
         <section className="mt-10">
-          <div className="card p-6">
+          <FadeIn className="card p-6">
             <h2 className="text-2xl font-semibold">No case studies yet.</h2>
             <p className="mt-3 text-sm text-muted">
               Publish a project to start showcasing your work here.
@@ -124,21 +127,21 @@ export default function WorkGallery({ projects }: Props) {
             <Link href="/contact" className="btn btn-primary mt-6">
               Start a Project
             </Link>
-          </div>
+          </FadeIn>
         </section>
       ) : (
         <>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+          <StaggerContainer className="mt-8 grid gap-3 sm:grid-cols-3">
             {stats.map((stat) => (
-              <div key={stat.label} className="stat">
+              <StaggerItem key={stat.label} className="stat">
                 <p className="stat-value">{stat.value}</p>
                 <p className="stat-label">{stat.label}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
 
-          <section className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="card p-5">
+          <FadeIn delay={0.2} direction="up" className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="card p-5 shadow-sm">
               <label className="text-xs uppercase tracking-[0.2em] text-muted">
                 Search
                 <span className="sr-only">projects</span>
@@ -209,9 +212,9 @@ export default function WorkGallery({ projects }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </FadeIn>
 
-          <section className="mt-6">
+          <FadeIn delay={0.3} direction="up" className="mt-6">
             <p className="text-xs uppercase tracking-[0.2em] text-muted">Tags</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {tags.map((tag) => (
@@ -224,21 +227,21 @@ export default function WorkGallery({ projects }: Props) {
                     "rounded-full border px-3 py-1 text-xs font-semibold transition",
                     activeTag === tag
                       ? "border-ink bg-ink text-white"
-                      : "border-border bg-white text-ink-soft"
+                      : "border-border bg-white text-ink-soft hover:bg-black/5"
                   )}
                 >
                   {tag}
                 </button>
               ))}
             </div>
-          </section>
+          </FadeIn>
 
       {featuredProject && !isFiltering ? (
-        <section className="mt-12">
+        <FadeIn direction="up" className="mt-12">
           <p className="eyebrow">Featured Case Study</p>
           <Link
             href={`/work/${featuredProject.slug}`}
-            className="card group mt-4 flex flex-col overflow-hidden transition hover:-translate-y-1 focus-ring"
+            className="card group mt-4 flex flex-col overflow-hidden transition-all hover:shadow-lg hover:-translate-y-2 focus-ring"
           >
             <div className="p-8 text-white" style={getCoverStyle(featuredProject)}>
               <p className="text-xs uppercase tracking-[0.2em] text-white/70">
@@ -287,7 +290,7 @@ export default function WorkGallery({ projects }: Props) {
               </div>
             </div>
           </Link>
-        </section>
+        </FadeIn>
       ) : null}
 
       <section className="mt-12">
@@ -400,15 +403,26 @@ export default function WorkGallery({ projects }: Props) {
                           <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
                         </span>
                         {project.behanceUrl ? (
-                          <a
-                            href={project.behanceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink"
+                          <span
+                            role="link"
+                            tabIndex={0}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              window.open(project.behanceUrl!, "_blank", "noopener,noreferrer");
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                window.open(project.behanceUrl!, "_blank", "noopener,noreferrer");
+                              }
+                            }}
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink cursor-pointer"
                           >
                             <BehanceIcon className="h-3.5 w-3.5" />
                             Behance presentation
-                          </a>
+                          </span>
                         ) : null}
                       </div>
                     </div>
@@ -420,21 +434,21 @@ export default function WorkGallery({ projects }: Props) {
         )}
       </section>
 
-          <section className="mt-20">
-            <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float">
+          <FadeIn direction="up" className="mt-20">
+            <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float shadow-lg border-white/50 bg-white/40">
               <p className="eyebrow">Next Step</p>
               <h2 className="text-3xl font-semibold sm:text-4xl">
                 Want to explore a design partnership?
               </h2>
-              <p className="max-w-2xl text-muted">
+              <p className="max-w-2xl text-muted text-balance">
                 Share your product goals and I will recommend a design plan tailored
                 to your timeline.
               </p>
-              <Link href="/contact" className="btn btn-primary">
+              <Link href="/contact" className="btn btn-primary mt-2">
                 Book a Project Call
               </Link>
             </div>
-          </section>
+          </FadeIn>
         </>
       )}
     </main>

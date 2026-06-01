@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight, Compass, Gauge, LayoutGrid } from "lucide-react";
 import { getProjects } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 const services = [
   {
@@ -75,25 +76,35 @@ export default async function Home() {
   return (
     <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
       <section className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="space-y-6">
-          <p className="eyebrow animate-fade-up">Abuja - UI/UX Designer</p>
-          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl animate-fade-up delay-1">
-            I design mobile and web interfaces people trust.
-          </h1>
-          <p className="max-w-xl text-lg text-muted animate-fade-up delay-2">
-            With 1+ year of hands-on product design experience, I create clear,
-            usable flows and polished UI that help teams ship faster and users
-            feel confident.
-          </p>
-          <div className="flex flex-wrap gap-4 animate-fade-up delay-3">
+        <StaggerContainer className="space-y-6">
+          <StaggerItem direction="up">
+            <p className="eyebrow">Abuja - UI/UX Designer</p>
+          </StaggerItem>
+          
+          <StaggerItem direction="up">
+            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-balance">
+              I design mobile and web interfaces people trust.
+            </h1>
+          </StaggerItem>
+          
+          <StaggerItem direction="up">
+            <p className="max-w-xl text-lg text-muted text-balance">
+              With 1+ year of hands-on product design experience, I create clear,
+              usable flows and polished UI that help teams ship faster and users
+              feel confident.
+            </p>
+          </StaggerItem>
+          
+          <StaggerItem direction="up" className="flex flex-wrap gap-4 pt-2">
             <Link href="/work" className="btn btn-primary">
               View Work
             </Link>
             <Link href="/contact" className="btn btn-ghost">
               Hire me
             </Link>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          </StaggerItem>
+          
+          <StaggerItem direction="up" className="flex flex-wrap gap-2 pt-2">
             {["Mobile-first UI", "Responsive UX", "Research-led"].map(
               (item) => (
                 <span key={item} className="pill">
@@ -101,18 +112,19 @@ export default async function Home() {
                 </span>
               )
             )}
-          </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          </StaggerItem>
+          
+          <StaggerItem direction="up" className="grid gap-3 sm:grid-cols-3 pt-6">
             {stats.map((stat) => (
               <div key={stat.label} className="stat">
                 <p className="stat-value">{stat.value}</p>
                 <p className="stat-label">{stat.label}</p>
               </div>
             ))}
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerContainer>
 
-        <div className="card overflow-hidden animate-fade-in animate-float">
+        <FadeIn direction="left" delay={0.3} className="card overflow-hidden animate-float">
           {heroProject ? (
             <>
               <div
@@ -188,17 +200,17 @@ export default async function Home() {
               </Link>
             </div>
           )}
-        </div>
+        </FadeIn>
       </section>
 
-      <section className="mt-12">
+      <FadeIn delay={0.2} className="mt-12">
         <p className="eyebrow">Selected Clients</p>
         {clients.length > 0 ? (
           <div className="mt-4 flex flex-wrap gap-3">
             {clients.map((client) => (
               <span
                 key={client}
-                className="rounded-full border border-border bg-white px-4 py-2 text-xs font-semibold text-ink-soft"
+                className="rounded-full border border-border bg-white px-4 py-2 text-xs font-semibold text-ink-soft transition-transform hover:-translate-y-0.5 hover:shadow-sm"
               >
                 {client}
               </span>
@@ -209,16 +221,16 @@ export default async function Home() {
             Client partnerships will appear here once projects are published.
           </p>
         )}
-      </section>
+      </FadeIn>
 
       <section className="mt-20">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <FadeIn className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow">Selected Work</p>
-            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
               Case studies that show clarity and impact.
             </h2>
-            <p className="mt-4 max-w-xl text-muted">
+            <p className="mt-4 max-w-xl text-muted text-balance">
               A snapshot of projects where I led UX/UI, flow mapping, and
               interface systems from start to prototype.
             </p>
@@ -231,57 +243,58 @@ export default async function Home() {
               View all case studies
             </Link>
           ) : null}
-        </div>
+        </FadeIn>
 
         {projects.length > 0 ? (
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <StaggerContainer className="mt-10 grid gap-6 lg:grid-cols-3">
             {featuredProjects.map((project) => (
-              <Link
-                key={project.slug}
-                href={`/work/${project.slug}`}
-                className="card group flex h-full flex-col overflow-hidden transition hover:-translate-y-1"
-              >
-                <div className="p-5 text-white" style={getCoverStyle(project)}>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                    {project.category}
-                  </p>
-                  <h3 className="mt-3 text-xl font-semibold">{project.title}</h3>
-                  <p className="mt-2 text-sm text-white/80">
-                    {project.summary ?? project.overview}
-                  </p>
-                </div>
-                <div className="flex h-full flex-col gap-4 p-5">
-                  <div className="flex items-center justify-between text-xs text-muted">
-                    <span>{project.role}</span>
-                    <span>{project.duration}</span>
+              <StaggerItem key={project.slug}>
+                <Link
+                  href={`/work/${project.slug}`}
+                  className="card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
+                >
+                  <div className="p-5 text-white" style={getCoverStyle(project)}>
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/70">
+                      {project.category}
+                    </p>
+                    <h3 className="mt-3 text-xl font-semibold">{project.title}</h3>
+                    <p className="mt-2 text-sm text-white/80">
+                      {project.summary ?? project.overview}
+                    </p>
                   </div>
-                  <p className="text-sm text-muted">{project.overview}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="pill">
-                        {tag}
-                      </span>
-                    ))}
+                  <div className="flex h-full flex-col gap-4 p-5">
+                    <div className="flex items-center justify-between text-xs text-muted">
+                      <span>{project.role}</span>
+                      <span>{project.duration}</span>
+                    </div>
+                    <p className="text-sm text-muted">{project.overview}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="pill bg-surface">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-ink">
+                      View case study
+                      <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </div>
                   </div>
-                  <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-ink">
-                    View case study
-                    <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         ) : (
-          <div className="card mt-8 p-6">
+          <FadeIn className="card mt-8 p-6">
             <p className="text-sm text-muted">
               No published case studies yet. Check back soon.
             </p>
-          </div>
+          </FadeIn>
         )}
       </section>
 
       <section className="mt-20">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <FadeIn className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow">Services</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
@@ -292,13 +305,13 @@ export default async function Home() {
               quickly without sacrificing quality.
             </p>
           </div>
-        </div>
+        </FadeIn>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
+        <StaggerContainer className="mt-8 grid gap-6 md:grid-cols-3">
           {services.map((service) => (
-            <div key={service.title} className="card p-6">
+            <StaggerItem key={service.title} className="card p-6 transition-all hover:shadow-md hover:-translate-y-1">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white shadow-sm">
                   <service.icon className="h-5 w-5 text-accent" />
                 </span>
                 <h3 className="text-lg font-semibold">{service.title}</h3>
@@ -309,47 +322,50 @@ export default async function Home() {
               </p>
               <ul className="mt-2 space-y-1 text-sm text-muted">
                 {service.deliverables.map((deliverable) => (
-                  <li key={deliverable}>{deliverable}</li>
+                  <li key={deliverable} className="flex items-center gap-2">
+                    <span className="h-1 w-1 rounded-full bg-accent/40" />
+                    {deliverable}
+                  </li>
                 ))}
               </ul>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
       <section className="mt-20">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
+          <FadeIn direction="right">
             <p className="eyebrow">Process</p>
-            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
               A clear, collaborative design process.
             </h2>
-            <p className="mt-4 text-muted">
+            <p className="mt-4 text-muted text-balance">
               I keep the work structured and transparent, so teams stay aligned
               and shipping stays predictable.
             </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
+          </FadeIn>
+          <StaggerContainer className="grid gap-4 md:grid-cols-3">
             {processSteps.map((step, index) => (
-              <div key={step.title} className="card p-6">
-                <p className="text-sm font-semibold text-ink">
+              <StaggerItem key={step.title} className="card p-6 transition-transform hover:-translate-y-1">
+                <p className="text-sm font-semibold text-accent">
                   0{index + 1}
                 </p>
                 <h3 className="mt-3 text-xl font-semibold">{step.title}</h3>
                 <p className="mt-2 text-sm text-muted">{step.description}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
-      <section className="mt-20 grid gap-8 lg:grid-cols-[1fr_1fr]">
+      <FadeIn className="mt-20 grid gap-8 lg:grid-cols-[1fr_1fr]">
         <div>
           <p className="eyebrow">About</p>
-          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
             A collaborative designer for product teams.
           </h2>
-          <p className="mt-4 text-muted">
+          <p className="mt-4 text-muted text-balance">
             I&apos;m David Olumide Daniel, an Abuja-based UI/UX designer focused on
             mobile and web interfaces. I partner with founders and product teams
             to clarify direction, build intuitive UX, and ship consistent UI
@@ -363,31 +379,40 @@ export default async function Home() {
             <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="card p-6">
+        <div className="card p-6 shadow-sm">
           <h3 className="text-2xl font-semibold">What you get</h3>
           <ul className="mt-4 space-y-3 text-sm text-muted">
-            <li>Clear decision-making frameworks to keep teams aligned.</li>
-            <li>Production-ready UI with consistent components.</li>
-            <li>Collaboration across product, design, and engineering.</li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              Clear decision-making frameworks to keep teams aligned.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              Production-ready UI with consistent components.
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+              Collaboration across product, design, and engineering.
+            </li>
           </ul>
         </div>
-      </section>
+      </FadeIn>
 
-      <section className="mt-20">
-        <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float">
+      <FadeIn direction="up" delay={0.2} className="mt-20">
+        <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float shadow-lg border-white/50 bg-white/40">
           <p className="eyebrow">Next Project</p>
           <h2 className="text-3xl font-semibold sm:text-4xl">
             Ready to design your next release?
           </h2>
-          <p className="max-w-2xl text-muted">
+          <p className="max-w-2xl text-muted text-balance">
             Share a quick overview of your goals and timelines, and I will
             recommend a design plan that fits your product stage.
           </p>
-          <Link href="/contact" className="btn btn-primary">
+          <Link href="/contact" className="btn btn-primary mt-2">
             Contact Me
           </Link>
         </div>
-      </section>
+      </FadeIn>
     </main>
   );
 }

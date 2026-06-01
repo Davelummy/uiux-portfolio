@@ -52,6 +52,83 @@ const BLUR_DATA_URL =
 
 const PROJECTS: Project[] = [
   {
+    id: "crystalline-max",
+    slug: "crystalline-max",
+    title: "Crystalline Max",
+    client: "Crystalline Max (CTMDS)",
+    year: "2025",
+    category: "Landing Page & Marketing Website",
+    role: "UI/UX Designer & Developer",
+    duration: "4 weeks",
+    tools: ["Figma", "React", "Next.js", "Tailwind CSS", "Framer Motion"],
+    team: "Solo designer and developer",
+    summary:
+      "A high-converting, motion-rich landing page designed to showcase a premium service operations platform.",
+    overview:
+      "Designed and developed a modern, high-performance landing page to market the Crystalline Max platform. The focus was on clear value messaging, engaging scroll animations, and an optimized conversion funnel.",
+    problem:
+      "The business needed a compelling digital storefront to attract new clients, explain their complex service platform simply, and drive booking conversions without feeling overwhelming.",
+    goals: [
+      "Communicate the value proposition of the platform clearly and quickly.",
+      "Design an engaging, premium visual experience with smooth animations.",
+      "Optimize for fast load times and seamless mobile responsiveness.",
+      "Drive user conversion through strategic call-to-action placement."
+    ],
+    responsibilities: [
+      "Designed the landing page UI and visual aesthetic in Figma.",
+      "Built the frontend using Next.js, Tailwind CSS, and Framer Motion.",
+      "Implemented responsive layouts and optimized performance.",
+      "Created custom scroll-triggered animations for visual storytelling."
+    ],
+    approach: [
+      {
+        title: "Visual Storytelling",
+        detail:
+          "Used progressive disclosure and scroll-linked animations to guide the user through the platform's features without cognitive overload."
+      },
+      {
+        title: "Performance First",
+        detail:
+          "Built on Next.js with optimized images and lazy-loaded components to ensure lightning-fast load times despite rich visual effects."
+      },
+      {
+        title: "Premium Aesthetic",
+        detail:
+          "Employed glassmorphism, subtle gradients, and refined typography to communicate trust, quality, and a modern brand identity."
+      }
+    ],
+    solution:
+      "A fast, beautifully animated landing page that effectively communicates the Crystalline Max value proposition and guides visitors toward conversion with a premium user experience.",
+    outcome:
+      "Successfully launched a marketing site that elevated the brand's digital presence, resulting in improved engagement metrics and a stronger foundation for customer acquisition.",
+    highlights: [
+      "Smooth scroll animations using Framer Motion.",
+      "Responsive, mobile-first design architecture.",
+      "Optimized Core Web Vitals for maximum SEO impact.",
+      "Modern UI aesthetic with glassmorphic elements and dynamic gradients."
+    ],
+    metrics: [
+      { value: "Web", label: "Platform" },
+      { value: "Marketing", label: "Focus" },
+      { value: "Next.js", label: "Stack" },
+      { value: "Live", label: "Status" }
+    ],
+    tags: ["Web Design", "Frontend", "Marketing", "Framer Motion"],
+    cover: {
+      background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #e94560 100%)",
+      foreground: "#ffffff"
+    },
+    coverImageUrl: "/projects/crystalline-max.jpg",
+    blurDataUrl: BLUR_DATA_URL,
+    behanceUrl: null,
+    figmaEmbed: null,
+    isFeatured: true,
+    isPublished: true,
+    sortOrder: 3,
+    createdAt: "2025-01-15",
+    updatedAt: "2026-04-19"
+  },
+  {
     id: "voices-unbroken",
     slug: "voices-unbroken",
     title: "Voices Unbroken",
