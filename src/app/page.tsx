@@ -1,31 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Compass, Gauge, LayoutGrid } from "lucide-react";
+import { ArrowUpRight, Compass, Code, LayoutGrid } from "lucide-react";
 import { getProjects } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 const services = [
   {
-    title: "Discovery & Strategy",
+    title: "Discovery & UX Strategy",
     description:
       "Align on goals, map user journeys, and define the key moments that matter.",
     deliverables: ["Research synthesis", "User flows", "Opportunity framing"],
     icon: Compass
   },
   {
-    title: "UX/UI Design",
+    title: "UI & Interaction Design",
     description:
-      "Design intuitive interfaces, refine interactions, and test early for clarity.",
-    deliverables: ["Wireframes", "High-fidelity UI", "Clickable prototypes"],
+      "Design intuitive interfaces, refine interactions, and build scalable design systems.",
+    deliverables: ["High-fidelity UI", "Clickable prototypes", "Component libraries"],
     icon: LayoutGrid
   },
   {
-    title: "Design Systems",
+    title: "Full-Stack Development",
     description:
-      "Build scalable components and handoff-ready guidance for consistent delivery.",
-    deliverables: ["Component library", "Design tokens", "Handoff support"],
-    icon: Gauge
+      "Engineer robust applications from pixel-perfect frontends to secure, scalable backends.",
+    deliverables: ["React / Next.js", "Firebase / Node.js", "API Integrations"],
+    icon: Code
   }
 ];
 
@@ -78,20 +78,20 @@ export default async function Home() {
       <section className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
         <StaggerContainer className="space-y-6">
           <StaggerItem direction="up">
-            <p className="eyebrow">Abuja - UI/UX Designer</p>
+            <p className="eyebrow">Abuja - Product Designer & Engineer</p>
           </StaggerItem>
           
           <StaggerItem direction="up">
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-balance">
-              I design mobile and web interfaces people trust.
+              I design and build digital products people trust.
             </h1>
           </StaggerItem>
           
           <StaggerItem direction="up">
             <p className="max-w-xl text-lg text-muted text-balance">
-              With 1+ year of hands-on product design experience, I create clear,
-              usable flows and polished UI that help teams ship faster and users
-              feel confident.
+              Blending product design with full-stack development, I create clear,
+              usable flows and robust codebases that help teams ship end-to-end 
+              experiences faster.
             </p>
           </StaggerItem>
           
@@ -363,13 +363,12 @@ export default async function Home() {
         <div>
           <p className="eyebrow">About</p>
           <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
-            A collaborative designer for product teams.
+            A collaborative partner for product teams.
           </h2>
           <p className="mt-4 text-muted text-balance">
-            I&apos;m David Olumide Daniel, an Abuja-based UI/UX designer focused on
-            mobile and web interfaces. I partner with founders and product teams
-            to clarify direction, build intuitive UX, and ship consistent UI
-            systems.
+            I&apos;m David Olumide Daniel, an Abuja-based Product Designer and Full-Stack
+            Developer. I partner with founders and product teams to clarify direction, 
+            build intuitive UX, and engineer scalable front-end and back-end systems.
           </p>
           <Link
             href="/about"

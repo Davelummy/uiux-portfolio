@@ -191,7 +191,7 @@ export default function WorkGallery({ projects }: Props) {
                 ))}
               </div>
               <p className="mt-4 text-xs uppercase tracking-[0.2em] text-muted">
-                Categories
+                Disciplines
               </p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {categories.map((category) => (

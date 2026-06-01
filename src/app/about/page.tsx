@@ -5,30 +5,29 @@ export default function AboutPage() {
         <div>
           <p className="eyebrow">About</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
-            Designing with clarity, empathy, and real product intent.
+            Building with clarity, empathy, and strong engineering.
           </h1>
           <p className="mt-4 text-muted">
-            I&apos;m David Olumide Daniel, an Abuja-based UI/UX designer focused on
-            translating product goals into clear, user-centered experiences.
-            My work blends research, interaction design, and visual craft to
-            create interfaces that feel confident and easy to use.
+            I&apos;m David Olumide Daniel, an Abuja-based Product Designer and Full-Stack
+            Developer. I focus on translating business goals into clear, user-centered 
+            experiences—and bringing them to life with robust code.
           </p>
           <p className="mt-4 text-muted">
-            With 1+ year of hands-on experience, I enjoy collaborating closely
-            with founders, PMs, and engineers to ship thoughtful products and
-            scalable UI systems.
+            Blending UX research, interaction design, and modern web development, I enjoy 
+            collaborating closely with founders and teams to ship thoughtful, scalable, 
+            and complete digital products from idea to production.
           </p>
         </div>
 
         <div className="card p-6">
           <p className="eyebrow">Snapshot</p>
           <ul className="mt-4 space-y-3 text-sm text-muted">
-            <li>Mobile-first UI and responsive web design.</li>
-            <li>UX flow mapping and rapid prototyping.</li>
-            <li>Collaborative partner for founders, PMs, and engineers.</li>
+            <li>End-to-end product design and development.</li>
+            <li>Mobile-first UI and responsive full-stack architecture.</li>
+            <li>Collaborative partner capable of bridging design and engineering.</li>
           </ul>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Figma", "FigJam", "Maze", "Notion", "Miro"].map((tool) => (
+            {["Figma", "React", "Next.js", "Firebase", "Node.js", "Tailwind"].map((tool) => (
               <span key={tool} className="pill">
                 {tool}
               </span>
@@ -49,12 +48,12 @@ export default function AboutPage() {
         <div className="card p-6">
           <h2 className="text-2xl font-semibold">Capabilities</h2>
           <p className="mt-4 text-sm text-muted">
-            I run lean discovery, map user journeys, and ship aligned UI
-            systems. The goal is to keep teams moving quickly while staying
-            anchored on user insight and usability.
+            I run lean discovery, map user journeys, and then actually build the 
+            solutions. My dual skill set ensures that the design vision is perfectly 
+            translated into performant, production-ready code.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Research", "UX Strategy", "UI Design", "Prototyping", "Design Systems"].map(
+            {["UI/UX Design", "Frontend Dev", "Backend Dev", "API Integration", "Design Systems"].map(
               (item) => (
                 <span key={item} className="pill">
                   {item}

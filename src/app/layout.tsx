@@ -23,9 +23,9 @@ const bodyFont = Manrope({
 });
 
 export const metadata = {
-  title: "David Olumide Daniel | UI/UX Designer",
+  title: "David Olumide Daniel | Product Designer & Software Engineer",
   description:
-    "Abuja-based UI/UX designer crafting accessible, high-conversion digital products."
+    "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products."
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <Link href="/" className="flex items-center gap-3 transition-transform hover:-translate-y-0.5">
                   <span className="text-lg font-semibold">David Olumide</span>
                   <span className="hidden text-sm text-muted sm:inline">
-                    UI/UX Designer
+                    Design Engineer
                   </span>
                 </Link>
 
@@ -86,8 +86,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <div>
                   <p className="text-sm font-semibold">David Olumide Daniel</p>
                   <p className="mt-2 text-muted">
-                    UI/UX designer focused on mobile and web interfaces that feel
-                    clear, calm, and ready to build.
+                    Product Designer and Full-Stack Engineer bridging the gap between 
+                    clear, calm interfaces and robust, scalable architectures.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-muted md:justify-center">
