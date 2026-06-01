@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { projects } from "@/lib/projects";
+import { getProjects } from "@/lib/projects";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://davidolumide.com";
 
   const routes = ["", "/about", "/work", "/contact"].map((route) => ({
@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: route === "" ? 1 : 0.8
   }));
+
+  const projects = await getProjects({ publishedOnly: true });
 
   const projectRoutes = projects.map((project) => ({
     url: `${baseUrl}/work/${project.slug}`,

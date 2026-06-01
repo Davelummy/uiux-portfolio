@@ -58,7 +58,7 @@ const PROJECTS: Project[] = [
     title: "Kasada MVP",
     client: "Kasada",
     year: "2024",
-    category: "Full-Stack Development",
+    category: "Full-Stack",
     role: "Product Designer & Full-Stack Developer",
     duration: "8 weeks",
     tools: ["React", "Vite", "Tailwind CSS", "Firebase", "Three.js", "Paystack"],
@@ -114,7 +114,7 @@ const PROJECTS: Project[] = [
       { value: "React/Firebase", label: "Stack" },
       { value: "Live MVP", label: "Status" }
     ],
-    tags: ["Product Design", "E-Commerce", "Full-Stack", "AR/3D"],
+    tags: ["UI/UX Design", "Web Design", "Frontend", "Full-Stack", "AR/3D"],
     cover: {
       background: "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
       foreground: "#ffffff"
@@ -124,7 +124,7 @@ const PROJECTS: Project[] = [
     behanceUrl: null,
     figmaEmbed: null,
     liveUrl: "https://your-kasada-deployed-link.com",
-    isFeatured: true,
+    isFeatured: false,
     isPublished: true,
     sortOrder: 4,
     createdAt: "2024-05-15",
@@ -136,55 +136,55 @@ const PROJECTS: Project[] = [
     title: "Crystalline Max",
     client: "Crystalline Max (CTMDS)",
     year: "2025",
-    category: "Front-End Development",
+    category: "Frontend",
     role: "UI/UX Designer & Front-End Developer",
     duration: "4 weeks",
     tools: ["Figma", "React", "Next.js", "Tailwind CSS", "Framer Motion"],
     team: "Solo designer and developer",
     summary:
-      "A high-converting, motion-rich landing page designed to showcase a premium service operations platform.",
+      "A high-converting, motion-rich landing page designed to showcase Crystalline Max's professional cleaning services and convert visitors into WhatsApp leads.",
     overview:
-      "Designed and developed a modern, high-performance landing page to market the Crystalline Max platform. The focus was on clear value messaging, engaging scroll animations, and an optimized conversion funnel.",
+      "Designed and developed a modern landing page to market Crystalline Max's cleaning business. The focus was on establishing trust, clearly communicating service offerings, and driving booking inquiries through WhatsApp with a seamless conversion flow.",
     problem:
-      "The business needed a compelling digital storefront to attract new clients, explain their complex service platform simply, and drive booking conversions without feeling overwhelming.",
+      "Crystalline Max needed an online presence that reflected the quality of their service, built instant trust with potential clients, and made it dead simple to book — all within a single, fast-loading page.",
     goals: [
-      "Communicate the value proposition of the platform clearly and quickly.",
-      "Design an engaging, premium visual experience with smooth animations.",
-      "Optimize for fast load times and seamless mobile responsiveness.",
-      "Drive user conversion through strategic call-to-action placement."
+      "Establish a professional, trustworthy brand presence online.",
+      "Clearly present service packages and pricing without overwhelming visitors.",
+      "Drive conversions through WhatsApp with minimal friction.",
+      "Design a premium visual experience with smooth scroll animations."
     ],
     responsibilities: [
-      "Designed the landing page UI and visual aesthetic in Figma.",
+      "Designed the landing page UI and brand aesthetic in Figma.",
       "Built the frontend using Next.js, Tailwind CSS, and Framer Motion.",
-      "Implemented responsive layouts and optimized performance.",
-      "Created custom scroll-triggered animations for visual storytelling."
+      "Created responsive layouts optimized for mobile-first browsing.",
+      "Integrated WhatsApp-based CTA flow for instant lead capture."
     ],
     approach: [
       {
-        title: "Visual Storytelling",
+        title: "Trust-First Design",
         detail:
-          "Used progressive disclosure and scroll-linked animations to guide the user through the platform's features without cognitive overload."
+          "Focused on professional imagery, clean layout, and social proof elements to immediately convey credibility for a service-based business."
       },
       {
-        title: "Performance First",
+        title: "Conversion-Focused Flow",
         detail:
-          "Built on Next.js with optimized images and lazy-loaded components to ensure lightning-fast load times despite rich visual effects."
+          "Every section guided visitors toward the WhatsApp CTA, removing unnecessary steps between interest and booking."
       },
       {
         title: "Premium Aesthetic",
         detail:
-          "Employed glassmorphism, subtle gradients, and refined typography to communicate trust, quality, and a modern brand identity."
+          "Employed glassmorphism, subtle gradients, and refined typography to communicate quality and a modern brand identity."
       }
     ],
     solution:
-      "A fast, beautifully animated landing page that effectively communicates the Crystalline Max value proposition and guides visitors toward conversion with a premium user experience.",
+      "A fast, beautifully animated marketing page that establishes the Crystalline Max brand, clearly presents their services, and channels leads directly into WhatsApp conversations.",
     outcome:
-      "Successfully launched a marketing site that elevated the brand's digital presence, resulting in improved engagement metrics and a stronger foundation for customer acquisition.",
+      "Successfully launched the brand's first digital presence — a marketing site that drives real booking inquiries through a streamlined WhatsApp conversion funnel.",
     highlights: [
       "Smooth scroll animations using Framer Motion.",
+      "WhatsApp-first conversion flow for instant lead capture.",
       "Responsive, mobile-first design architecture.",
-      "Optimized Core Web Vitals for maximum SEO impact.",
-      "Modern UI aesthetic with glassmorphic elements and dynamic gradients."
+      "Premium UI with glassmorphic elements and dynamic gradients."
     ],
     metrics: [
       { value: "Web", label: "Platform" },
@@ -192,7 +192,7 @@ const PROJECTS: Project[] = [
       { value: "Next.js", label: "Stack" },
       { value: "Live", label: "Status" }
     ],
-    tags: ["Web Design", "Frontend", "Marketing", "Framer Motion"],
+    tags: ["UI/UX Design", "Web Design", "Frontend", "Marketing"],
     cover: {
       background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #e94560 100%)",
       foreground: "#ffffff"
@@ -214,7 +214,7 @@ const PROJECTS: Project[] = [
     title: "Voices Unbroken",
     client: "Voices Unbroken",
     year: "2024",
-    category: "UI/UX Design",
+    category: "Web Design",
     role: "UI/UX Designer",
     duration: "5 weeks",
     tools: ["Figma", "FigJam", "Notion"],
@@ -266,7 +266,7 @@ const PROJECTS: Project[] = [
       { value: "Community", label: "Focus" },
       { value: "MVP", label: "Scope" }
     ],
-    tags: ["Web UX", "Storytelling", "Community"],
+    tags: ["UI/UX Design", "Web Design", "Figma Prototype", "Storytelling", "Community"],
     cover: {
       background: "linear-gradient(135deg, #0f172a 0%, #1e40af 60%, #93c5fd 100%)",
       foreground: "#ffffff"
@@ -278,7 +278,7 @@ const PROJECTS: Project[] = [
     figmaEmbed:
       "https://embed.figma.com/proto/VqIXa8Hf2hpx0Con2YpSfJ/Voices-Unbroken?page-id=0%3A1&node-id=125-11721&viewport=-1237%2C662%2C0.32&scaling=scale-down&content-scaling=fixed&starting-point-node-id=125%3A11721&show-proto-sidebar=1&embed-host=share",
     liveUrl: null,
-    isFeatured: true,
+    isFeatured: false,
     isPublished: true,
     sortOrder: 2,
     createdAt: "2024-04-10",
@@ -290,7 +290,7 @@ const PROJECTS: Project[] = [
     title: "Riggs Pharmaceuticals",
     client: "Riggs Pharmaceuticals",
     year: "2024",
-    category: "UI/UX Design",
+    category: "Mobile Design",
     role: "UI/UX Designer",
     duration: "6 weeks",
     tools: ["Figma", "FigJam", "Maze"],
@@ -342,7 +342,7 @@ const PROJECTS: Project[] = [
       { value: "Healthcare", label: "Industry" },
       { value: "Prototype", label: "Output" }
     ],
-    tags: ["Mobile UX", "Healthcare", "E-commerce"],
+    tags: ["UI/UX Design", "Mobile Design", "Figma Prototype", "Healthcare"],
     cover: {
       background: "linear-gradient(135deg, #0b3b34 0%, #0f766e 50%, #99f6e4 100%)",
       foreground: "#ffffff"
@@ -387,6 +387,17 @@ export async function getProjects(options?: {
     : PROJECTS;
   const sorted = sortProjects(filtered);
   return limit ? sorted.slice(0, limit) : sorted;
+}
+
+export async function getFeaturedProjects() {
+  return sortProjects(PROJECTS).filter((project) => project.isFeatured);
+}
+
+export async function getProjectCategories() {
+  const categories = new Set(
+    PROJECTS.filter((p) => p.isPublished).map((p) => p.category),
+  );
+  return Array.from(categories).filter(Boolean) as string[];
 }
 
 export async function getProjectBySlug(

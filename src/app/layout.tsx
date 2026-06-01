@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/social-icons";
 
 import { SmoothScrollProvider } from "@/components/ui/smooth-scroll";
+import { FloatingWhatsApp } from "@/components/ui/floating-whatsapp";
 
 const displayFont = Sora({
   subsets: ["latin"],
@@ -23,9 +24,28 @@ const bodyFont = Manrope({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://davidolumide.com"),
   title: "David Olumide Daniel | Product Designer & Software Engineer",
   description:
-    "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products."
+    "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products.",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://davidolumide.com" },
+  openGraph: {
+    title: "David Olumide Daniel | Product Designer & Software Engineer",
+    description:
+      "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products.",
+    url: "https://davidolumide.com",
+    siteName: "David Olumide Daniel",
+    type: "website",
+    locale: "en_US",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "David Olumide Daniel | Product Designer & Software Engineer",
+    description:
+      "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products."
+  }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -131,6 +151,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 </div>
               </div>
             </footer>
+            <FloatingWhatsApp />
           </div>
         </SmoothScrollProvider>
       </body>

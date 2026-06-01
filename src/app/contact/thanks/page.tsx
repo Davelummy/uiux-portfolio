@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Thank You | David Olumide Daniel",
+  description: "Your inquiry has been sent. I'll respond within 48 hours."
+};
 
 export default function ContactThanksPage() {
   return (

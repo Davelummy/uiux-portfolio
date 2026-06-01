@@ -17,6 +17,16 @@ type Props = {
   projects: Project[];
 };
 
+const FILTERS = [
+  "All",
+  "UI/UX Design",
+  "Web Design",
+  "Frontend",
+  "Full-Stack",
+  "Mobile Design",
+  "Figma Prototype"
+] as const;
+
 function matchesQuery(project: Project, query: string) {
   if (!query) return true;
   const haystack = [
@@ -25,6 +35,7 @@ function matchesQuery(project: Project, query: string) {
     project.overview,
     project.category,
     project.client,
+    project.role,
     project.tags.join(" ")
   ]
     .filter(Boolean)
@@ -35,36 +46,10 @@ function matchesQuery(project: Project, query: string) {
 }
 
 export default function WorkGallery({ projects }: Props) {
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = useReducedMotion() ?? true;
   const [query, setQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [activeTag, setActiveTag] = useState("All");
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
-
-  const categories = useMemo(() => {
-    const unique = new Set(
-      projects
-        .map((project) => project.category)
-        .filter((value): value is string => Boolean(value))
-    );
-    return ["All", ...Array.from(unique).sort()];
-  }, [projects]);
-
-  const tags = useMemo(() => {
-    const tagCounts = new Map<string, number>();
-    projects.forEach((project) => {
-      project.tags.forEach((tag) => {
-        tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
-      });
-    });
-    return [
-      "All",
-      ...Array.from(tagCounts.entries())
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 6)
-        .map(([tag]) => tag)
-    ];
-  }, [projects]);
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
 
   const stats = useMemo(() => {
     const clientCount = new Set(
@@ -80,27 +65,19 @@ export default function WorkGallery({ projects }: Props) {
     return [
       { value: `${projects.length}`, label: "Case Studies" },
       { value: `${clientCount}`, label: "Client Partners" },
-      { value: `${categoryCount}`, label: "Industries" }
+      { value: `${categoryCount}`, label: "Disciplines" }
     ];
   }, [projects]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {
-      const matchesCategory =
-        activeCategory === "All" || project.category === activeCategory;
-      const matchesTag =
-        activeTag === "All" || project.tags.includes(activeTag);
-      return matchesCategory && matchesTag && matchesQuery(project, query);
+      const matchesFilter =
+        activeFilter === "All" || project.tags.includes(activeFilter);
+      return matchesFilter && matchesQuery(project, query);
     });
-  }, [projects, activeCategory, activeTag, query]);
+  }, [projects, activeFilter, query]);
 
-  const featuredProject =
-    projects.find((project) => project.isFeatured) ?? projects[0];
-  const isFiltering =
-    query.trim().length > 0 || activeCategory !== "All" || activeTag !== "All";
-  const listProjects = isFiltering
-    ? filteredProjects
-    : projects.filter((project) => project.slug !== featuredProject?.slug);
+  const hasActiveFilter = query.trim().length > 0 || activeFilter !== "All";
 
   return (
     <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
@@ -140,37 +117,24 @@ export default function WorkGallery({ projects }: Props) {
             ))}
           </StaggerContainer>
 
-          <FadeIn delay={0.2} direction="up" className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="card p-5 shadow-sm">
-              <label className="text-xs uppercase tracking-[0.2em] text-muted">
-                Search
-                <span className="sr-only">projects</span>
-              </label>
-              <div className="mt-3 flex items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3">
+          <FadeIn delay={0.15} direction="up" className="mt-10">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3 shadow-sm min-w-[260px] max-w-sm flex-1">
                 <Search className="h-4 w-4 text-muted" aria-hidden />
                 <input
                   type="search"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Search by client, category, or keyword"
+                  placeholder="Search projects..."
                   className="w-full bg-transparent text-sm outline-none"
                   aria-label="Search projects"
                 />
               </div>
-              <p className="mt-3 text-xs text-muted" aria-live="polite">
-                {filteredProjects.length} projects match your filters.
-              </p>
-            </div>
-
-            <div className="card p-5">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted">
-                View
-              </p>
-              <div className="mt-4 flex gap-2">
-                {(
+              <div className="flex gap-2">
+                  {(
                   [
-                    { id: "grid", label: "Grid", icon: LayoutGrid },
-                    { id: "list", label: "List", icon: LayoutList }
+                    { id: "list", icon: LayoutList },
+                    { id: "grid", icon: LayoutGrid }
                   ] as const
                 ).map((mode) => (
                   <button
@@ -179,260 +143,195 @@ export default function WorkGallery({ projects }: Props) {
                     onClick={() => setViewMode(mode.id)}
                     aria-pressed={viewMode === mode.id}
                     className={clsx(
-                      "flex flex-1 items-center justify-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition",
+                      "rounded-full border p-2.5 transition",
                       viewMode === mode.id
                         ? "border-ink bg-ink text-white"
-                        : "border-border bg-white text-ink"
+                        : "border-border bg-white text-ink-soft hover:bg-black/5"
                     )}
+                    aria-label={`${mode.id} view`}
                   >
                     <mode.icon className="h-4 w-4" aria-hidden />
-                    {mode.label}
-                  </button>
-                ))}
-              </div>
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-muted">
-                Disciplines
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => setActiveCategory(category)}
-                    aria-pressed={activeCategory === category}
-                    className={clsx(
-                      "rounded-full border px-3 py-1 text-xs font-semibold transition",
-                      activeCategory === category
-                        ? "border-ink bg-ink text-white"
-                        : "border-border bg-white text-ink-soft"
-                    )}
-                  >
-                    {category}
                   </button>
                 ))}
               </div>
             </div>
-          </FadeIn>
 
-          <FadeIn delay={0.3} direction="up" className="mt-6">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted">Tags</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {tags.map((tag) => (
+            <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by discipline">
+              {FILTERS.map((filter) => (
                 <button
-                  key={tag}
+                  key={filter}
                   type="button"
-                  onClick={() => setActiveTag(tag)}
-                  aria-pressed={activeTag === tag}
+                  onClick={() => setActiveFilter(filter)}
+                  aria-pressed={activeFilter === filter}
                   className={clsx(
-                    "rounded-full border px-3 py-1 text-xs font-semibold transition",
-                    activeTag === tag
-                      ? "border-ink bg-ink text-white"
-                      : "border-border bg-white text-ink-soft hover:bg-black/5"
+                    "rounded-full border px-4 py-1.5 text-xs font-semibold tracking-wide transition",
+                    activeFilter === filter
+                      ? "border-ink bg-ink text-white shadow-sm"
+                      : "border-border bg-white text-ink-soft hover:border-ink/30 hover:text-ink"
                   )}
                 >
-                  {tag}
+                  {filter}
                 </button>
               ))}
             </div>
+
+            <p className="mt-3 text-xs text-muted" aria-live="polite">
+              {filteredProjects.length} project{filteredProjects.length !== 1 ? "s" : ""} match
+              {hasActiveFilter ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setQuery("");
+                    setActiveFilter("All");
+                  }}
+                  className="ml-2 font-semibold text-ink underline-offset-2 hover:underline"
+                >
+                  Clear
+                </button>
+              ) : null}
+            </p>
           </FadeIn>
 
-      {featuredProject && !isFiltering ? (
-        <FadeIn direction="up" className="mt-12">
-          <p className="eyebrow">Featured Case Study</p>
-          <Link
-            href={`/work/${featuredProject.slug}`}
-            className="card group mt-4 flex flex-col overflow-hidden transition-all hover:shadow-lg hover:-translate-y-2 focus-ring"
-          >
-            <div className="p-8 text-white" style={getCoverStyle(featuredProject)}>
-              <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                {featuredProject.category}
+          <section className="mt-10">
+            <div className="flex items-center justify-between">
+              <p className="eyebrow">
+                {hasActiveFilter ? "Results" : "All Case Studies"}
               </p>
-              <h2 className="mt-3 text-3xl font-semibold">
-                {featuredProject.title}
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-white/80">
-                {featuredProject.summary ?? featuredProject.overview}
-              </p>
-            {[
-              featuredProject.client,
-              featuredProject.year,
-              featuredProject.duration
-            ]
-              .filter(Boolean)
-              .join(" / ") ? (
-              <p className="mt-4 text-xs text-white/70">
-                {[
-                  featuredProject.client,
-                  featuredProject.year,
-                  featuredProject.duration
-                ]
-                  .filter(Boolean)
-                  .join(" / ")}
-              </p>
-            ) : null}
             </div>
-            <div className="flex flex-1 flex-col gap-4 p-6">
-              <div className="flex items-center justify-between text-xs text-muted">
-                <span>{featuredProject.role}</span>
-                <span>{featuredProject.team}</span>
-              </div>
-              <p className="text-sm text-muted">{featuredProject.overview}</p>
-              <div className="flex flex-wrap gap-2">
-                {featuredProject.tags.map((tag) => (
-                  <span key={tag} className="pill">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-ink">
-                View case study
-                <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-              </div>
-            </div>
-          </Link>
-        </FadeIn>
-      ) : null}
 
-      <section className="mt-12">
-        <div className="flex items-center justify-between">
-          <p className="eyebrow">{isFiltering ? "Results" : "All Case Studies"}</p>
-          {isFiltering ? (
-            <button
-              type="button"
-              onClick={() => {
-                setQuery("");
-                setActiveCategory("All");
-                setActiveTag("All");
-              }}
-              className="text-xs font-semibold text-ink transition hover:text-accent"
-            >
-              Clear filters
-            </button>
-          ) : null}
-        </div>
-
-        {listProjects.length === 0 ? (
-          <div className="card mt-6 p-6">
-            <p className="text-sm text-muted">
-              No projects match your current filters.
-            </p>
-          </div>
-        ) : (
-          <motion.div
-            layout={!reducedMotion}
-            className={clsx(
-              "mt-6 grid gap-6",
-              viewMode === "grid" ? "lg:grid-cols-2" : "grid-cols-1"
-            )}
-          >
-            <AnimatePresence mode="popLayout">
-              {listProjects.map((project) => (
-                <motion.article
-                  key={project.id}
-                  layout={!reducedMotion}
-                  initial={reducedMotion ? false : { opacity: 0, y: 16 }}
-                  animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-                  exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: -16 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <Link
-                    href={`/work/${project.slug}`}
-                    className={clsx(
-                      "card group flex h-full overflow-hidden transition hover:-translate-y-1 focus-ring",
-                      viewMode === "list" && "lg:flex-row"
-                    )}
-                  >
-                    <div
-                      className={clsx(
-                        "relative overflow-hidden",
-                        viewMode === "list" ? "lg:w-[45%]" : ""
-                      )}
-                      style={
-                        project.coverImageUrl ? undefined : getCoverStyle(project)
+            {filteredProjects.length === 0 ? (
+              <div className="card mt-6 p-6">
+                <p className="text-sm text-muted">
+                  No projects match your current filters.
+                </p>
+              </div>
+            ) : (
+              <motion.div
+                layout={!reducedMotion}
+                suppressHydrationWarning
+                className={clsx(
+                  "mt-6 gap-6",
+                  viewMode === "grid"
+                    ? "columns-1 sm:columns-2 lg:columns-2 [&>*]:break-inside-avoid"
+                    : "grid grid-cols-1"
+                )}
+              >
+                <AnimatePresence mode="popLayout">
+                  {filteredProjects.map((project) => (
+                    <motion.article
+                      key={project.id}
+                      layout={!reducedMotion}
+                      suppressHydrationWarning
+                      initial={
+                        reducedMotion ? false : { opacity: 0, y: 16 }
                       }
+                      animate={
+                        reducedMotion
+                          ? { opacity: 1 }
+                          : { opacity: 1, y: 0 }
+                      }
+                      exit={
+                        reducedMotion
+                          ? { opacity: 0 }
+                          : { opacity: 0, y: -16 }
+                      }
+                      transition={{ duration: 0.25 }}
+                      className="mb-6"
                     >
-                      {project.coverImageUrl ? (
-                        <>
-                          <Image
-                            src={project.coverImageUrl}
-                            alt={project.title}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover"
-                            placeholder={project.blurDataUrl ? "blur" : "empty"}
-                            blurDataURL={project.blurDataUrl ?? undefined}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
-                        </>
-                      ) : null}
                       <div
-                        className="relative z-10 p-6"
-                        style={
-                          project.coverImageUrl
-                            ? { color: project.cover.foreground }
-                            : undefined
-                        }
+                        className={clsx(
+                          "card flex h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-md",
+                          viewMode === "list" ? "sm:flex-row" : "flex-col"
+                        )}
                       >
-                        <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                          {project.category}
-                        </p>
-                        <h3 className="mt-3 text-2xl font-semibold">
-                          {project.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-white/80">
-                          {project.summary ?? project.overview}
-                        </p>
+                        <div
+                          className={clsx(
+                            "relative overflow-hidden",
+                            viewMode === "list" ? "sm:w-[40%] shrink-0" : ""
+                          )}
+                        >
+                          <Link href={`/work/${project.slug}`} className="block focus-ring">
+                            <div
+                              className={clsx(
+                                "relative p-6 text-white min-h-[200px] flex flex-col justify-end overflow-hidden",
+                                viewMode === "list" ? "sm:min-h-[220px]" : ""
+                              )}
+                            >
+                              {project.coverImageUrl ? (
+                                <>
+                                  <Image
+                                    src={project.coverImageUrl}
+                                    alt={project.title}
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 50vw"
+                                    className="object-cover"
+                                    placeholder={
+                                      project.blurDataUrl ? "blur" : "empty"
+                                    }
+                                    blurDataURL={project.blurDataUrl ?? undefined}
+                                  />
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+                                </>
+                              ) : (
+                                <div className="absolute inset-0" style={getCoverStyle(project)} />
+                              )}
+                              <p className="relative z-10 text-xs uppercase tracking-[0.2em] text-white/70">
+                                {project.category}
+                              </p>
+                              <h3 className="relative z-10 mt-1.5 text-xl font-semibold">
+                                {project.title}
+                              </h3>
+                              <p className="relative z-10 mt-1 text-sm text-white/80 line-clamp-2">
+                                {project.summary ?? project.overview}
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+                        <div className="flex flex-1 flex-col gap-3 p-5">
+                          <Link href={`/work/${project.slug}`} className="flex flex-1 flex-col gap-3 focus-ring">
+                            <div className="flex items-center justify-between text-xs text-muted">
+                              <span>{project.role}</span>
+                              <span>{project.duration}</span>
+                            </div>
+                            <p className="text-sm text-muted leading-relaxed line-clamp-3">
+                              {project.overview}
+                            </p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {project.tags.map((tag) => (
+                                <span key={tag} className="pill">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          </Link>
+                          <div className="mt-auto flex flex-wrap items-center gap-3 text-sm font-semibold text-ink">
+                            <Link
+                              href={`/work/${project.slug}`}
+                              className="inline-flex items-center gap-2 focus-ring"
+                            >
+                              View case study
+                              <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                            </Link>
+                            {project.behanceUrl ? (
+                              <a
+                                href={project.behanceUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink"
+                              >
+                                <BehanceIcon className="h-3.5 w-3.5" />
+                                Behance
+                              </a>
+                            ) : null}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex h-full flex-1 flex-col gap-4 p-6">
-                      <div className="flex items-center justify-between text-xs text-muted">
-                        <span>{project.role}</span>
-                        <span>{project.duration}</span>
-                      </div>
-                      <p className="text-sm text-muted">{project.overview}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag) => (
-                          <span key={tag} className="pill">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="mt-auto flex flex-wrap items-center gap-3 text-sm font-semibold text-ink">
-                        <span className="inline-flex items-center gap-2">
-                          View case study
-                          <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                        </span>
-                        {project.behanceUrl ? (
-                          <span
-                            role="link"
-                            tabIndex={0}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              window.open(project.behanceUrl!, "_blank", "noopener,noreferrer");
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" || e.key === " ") {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                window.open(project.behanceUrl!, "_blank", "noopener,noreferrer");
-                              }
-                            }}
-                            className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink cursor-pointer"
-                          >
-                            <BehanceIcon className="h-3.5 w-3.5" />
-                            Behance presentation
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
-                  </Link>
-                </motion.article>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </section>
+                    </motion.article>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            )}
+          </section>
 
           <FadeIn direction="up" className="mt-20">
             <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float shadow-lg border-white/50 bg-white/40">
@@ -441,8 +340,8 @@ export default function WorkGallery({ projects }: Props) {
                 Want to explore a design partnership?
               </h2>
               <p className="max-w-2xl text-muted text-balance">
-                Share your product goals and I will recommend a design plan tailored
-                to your timeline.
+                Share your product goals and I will recommend a design plan
+                tailored to your timeline.
               </p>
               <Link href="/contact" className="btn btn-primary mt-2">
                 Book a Project Call

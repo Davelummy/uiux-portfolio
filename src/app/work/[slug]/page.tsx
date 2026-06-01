@@ -8,15 +8,21 @@ import type { Metadata } from "next";
 import { BehanceIcon } from "@/components/ui/social-icons";
 
 type Props = {
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
+
+export async function generateStaticParams() {
+  const projects = await getProjects({ publishedOnly: true });
+  return projects.map((project) => ({ slug: project.slug }));
+}
 
 export async function generateMetadata({
   params
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const project = await getProjectBySlug(params.slug, true);
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug, true);
   const title = project?.title ?? "Project";
   const description =
     project?.summary ?? project?.overview ?? "UI/UX Design Case Study";
@@ -28,7 +34,13 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | David Olumide`,
       description,
-      images: [image]
+      images: [image],
+      type: "article"
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | David Olumide`,
+      description
     }
   };
 }

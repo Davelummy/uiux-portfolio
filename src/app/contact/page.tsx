@@ -65,7 +65,7 @@ export default function ContactPage() {
         <div>
           <p className="eyebrow">Contact</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
-            Ready to hire a UI/UX designer?
+            Ready to bring your product idea to life?
           </h1>
           <p className="mt-4 text-muted">
             I&apos;m available for full-time roles, contracts, and collaborations.

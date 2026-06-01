@@ -49,7 +49,7 @@ const processSteps = [
 
 export default async function Home() {
   const projects = await getProjects({ publishedOnly: true });
-  const featuredProjects = projects.slice(0, 3);
+  const featuredProjects = projects.filter((p) => !p.isFeatured).slice(0, 3);
   const heroProject =
     projects.find((project) => project.isFeatured) ?? projects[0];
   const clients = Array.from(
@@ -253,7 +253,23 @@ export default async function Home() {
                   href={`/work/${project.slug}`}
                   className="card group flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
                 >
-                  <div className="p-5 text-white" style={getCoverStyle(project)}>
+                  <div className="relative overflow-hidden p-5 text-white min-h-[180px] flex flex-col justify-end">
+                    {project.coverImageUrl ? (
+                      <>
+                        <Image
+                          src={project.coverImageUrl}
+                          alt={project.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className="object-cover"
+                          placeholder={project.blurDataUrl ? "blur" : "empty"}
+                          blurDataURL={project.blurDataUrl ?? undefined}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+                      </>
+                    ) : (
+                      <div className="absolute inset-0" style={getCoverStyle(project)} />
+                    )}
                     <p className="text-xs uppercase tracking-[0.2em] text-white/70">
                       {project.category}
                     </p>
@@ -263,9 +279,9 @@ export default async function Home() {
                     </p>
                   </div>
                   <div className="flex h-full flex-col gap-4 p-5">
-                    <div className="flex items-center justify-between text-xs text-muted">
-                      <span>{project.role}</span>
-                      <span>{project.duration}</span>
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-base font-semibold truncate">{project.title}</h3>
+                      <span className="shrink-0 text-xs text-muted">{project.duration}</span>
                     </div>
                     <p className="text-sm text-muted">{project.overview}</p>
                     <div className="flex flex-wrap gap-2">
