@@ -1,15 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { getProjectBySlug, getProjects } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { BehanceIcon } from "@/components/ui/social-icons";
+import { SITE_URL } from "@/lib/site";
+import { CaseStudyGallery } from "@/components/work/case-study-gallery";
+import { FadeIn } from "@/components/ui/fade-in";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const projects = await getProjects({ publishedOnly: true });
@@ -34,6 +39,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | David Olumide`,
       description,
+      url: `${SITE_URL}/work/${slug}`,
       images: [image],
       type: "article"
     },
@@ -41,6 +47,9 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: `${title} | David Olumide`,
       description
+    },
+    alternates: {
+      canonical: `/work/${slug}`
     }
   };
 }
@@ -55,9 +64,27 @@ export default async function WorkDetailPage({ params }: Props) {
   const relatedProjects = (await getProjects({ publishedOnly: true }))
     .filter((item) => item.slug !== project.slug)
     .slice(0, 2);
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.summary ?? project.overview ?? undefined,
+    url: `${SITE_URL}/work/${project.slug}`,
+    image: project.coverImageUrl
+      ? `${SITE_URL}${project.coverImageUrl}`
+      : undefined,
+    creator: { "@type": "Person", name: "David Olumide Daniel" },
+    dateCreated: project.createdAt,
+    dateModified: project.updatedAt,
+    keywords: project.tags.join(", ")
+  };
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
       <Link
         href="/work"
         className="text-sm font-semibold text-muted transition hover:text-ink"
@@ -65,7 +92,8 @@ export default async function WorkDetailPage({ params }: Props) {
         &larr; Back to Work
       </Link>
 
-      <section className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+      <FadeIn className="mt-6">
+      <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <p className="eyebrow">{project.category}</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
@@ -81,7 +109,7 @@ export default async function WorkDetailPage({ params }: Props) {
               </span>
             ))}
           </div>
-          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+           <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {project.metrics.map((metric) => (
               <div key={metric.label} className="stat">
                 <p className="stat-value">{metric.value}</p>
@@ -153,6 +181,24 @@ export default async function WorkDetailPage({ params }: Props) {
                   </dd>
                 </div>
               ) : null}
+              {project.sourceUrl ? (
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.2em] text-muted">
+                    Source
+                  </dt>
+                  <dd className="mt-2">
+                    <a
+                      href={project.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition hover:text-ink"
+                    >
+                      <Github className="h-4 w-4" aria-hidden="true" />
+                      {project.sourceCtaLabel ?? "View Source"}
+                    </a>
+                  </dd>
+                </div>
+              ) : null}
               <div>
                 <dt className="text-xs uppercase tracking-[0.2em] text-muted">
                   Role
@@ -193,20 +239,26 @@ export default async function WorkDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+      </FadeIn>
 
+      <FadeIn className="mt-10" delay={0.08}>
       <nav
-        className="mt-10 flex flex-wrap gap-3 text-sm text-muted"
+        className="flex flex-wrap gap-3 text-sm text-muted"
         aria-label="Case study sections"
       >
-        {[
+           {[
           { label: "Overview", href: "#overview" },
           { label: "Problem", href: "#problem" },
           { label: "Goals", href: "#goals" },
           { label: "Approach", href: "#approach" },
           { label: "Solution", href: "#solution" },
-          { label: "Outcome", href: "#outcome" },
-          { label: "Preview", href: "#preview" }
-        ].map((item) => (
+           { label: "Outcome", href: "#outcome" },
+           ...(project.gallery?.length
+             ? [{ label: "Gallery", href: "#gallery" }]
+             : []),
+           { label: "Preview", href: "#preview" }
+           ]
+             .map((item) => (
           <a
             key={item.href}
             href={item.href}
@@ -216,8 +268,10 @@ export default async function WorkDetailPage({ params }: Props) {
           </a>
         ))}
       </nav>
+      </FadeIn>
 
-      <section id="overview" className="section-anchor mt-10 grid gap-6 lg:grid-cols-3">
+      <FadeIn className="section-anchor mt-10">
+      <section id="overview" className="grid gap-6 lg:grid-cols-3">
         <div className="card p-6">
           <h2 className="text-2xl font-semibold">Overview</h2>
           <p className="mt-3 text-sm text-muted">{project.overview}</p>
@@ -235,8 +289,10 @@ export default async function WorkDetailPage({ params }: Props) {
           </ul>
         </div>
       </section>
+      </FadeIn>
 
-      <section className="mt-12 grid gap-6 lg:grid-cols-2">
+      <FadeIn className="mt-12">
+      <section className="grid gap-6 lg:grid-cols-2">
         <div id="responsibilities" className="section-anchor card p-6">
           <h2 className="text-2xl font-semibold">Responsibilities</h2>
           <ul className="mt-4 space-y-2 text-sm text-muted">
@@ -259,8 +315,10 @@ export default async function WorkDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+      </FadeIn>
 
-      <section className="mt-12 grid gap-6 lg:grid-cols-2">
+      <FadeIn className="mt-12">
+      <section className="grid gap-6 lg:grid-cols-2">
         <div id="solution" className="section-anchor card p-6">
           <h2 className="text-2xl font-semibold">Solution</h2>
           <p className="mt-3 text-sm text-muted">{project.solution}</p>
@@ -273,7 +331,7 @@ export default async function WorkDetailPage({ params }: Props) {
         <div id="outcome" className="section-anchor card p-6">
           <h2 className="text-2xl font-semibold">Outcome</h2>
           <p className="mt-3 text-sm text-muted">{project.outcome}</p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
+           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {project.metrics.map((metric) => (
               <div key={metric.label} className="stat text-center">
                 <p className="stat-value">{metric.value}</p>
@@ -283,8 +341,19 @@ export default async function WorkDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+      </FadeIn>
 
-      <section id="preview" className="section-anchor mt-12">
+       {project.gallery?.length ? (
+          <FadeIn className="section-anchor mt-12">
+          <section id="gallery">
+           <p className="eyebrow">Gallery</p>
+           <CaseStudyGallery gallery={project.gallery ?? []} />
+          </section>
+          </FadeIn>
+       ) : null}
+
+        <FadeIn className="section-anchor mt-12">
+        <section id="preview">
         <p className="eyebrow">Project Link</p>
         {project.liveUrl ? (
           <div className="card mt-4 p-8 flex flex-col items-center justify-center text-center gap-4 bg-white/60">
@@ -292,7 +361,9 @@ export default async function WorkDetailPage({ params }: Props) {
               <ArrowUpRight className="h-8 w-8 text-accent" />
             </div>
             <div>
-              <h3 className="text-2xl font-semibold">View Live Project</h3>
+               <h3 className="text-2xl font-semibold">
+                 {project.liveUrl ? "View Live Project" : "Project Preview"}
+               </h3>
               <p className="mt-2 text-sm text-muted max-w-md mx-auto text-balance">
                 Experience the live version of {project.title} deployed in production.
               </p>
@@ -303,8 +374,19 @@ export default async function WorkDetailPage({ params }: Props) {
               rel="noopener noreferrer"
               className="btn btn-primary mt-2"
             >
-              Visit Website
+              {project.liveCtaLabel ?? "Visit Website"}
             </a>
+            {project.sourceUrl ? (
+              <a
+                href={project.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost"
+              >
+                <Github className="h-4 w-4" aria-hidden="true" />
+                {project.sourceCtaLabel ?? "View Source"}
+              </a>
+            ) : null}
           </div>
         ) : project.figmaEmbed ? (
           <div className="card mt-4 overflow-hidden">
@@ -340,10 +422,12 @@ export default async function WorkDetailPage({ params }: Props) {
             </p>
           </div>
         )}
-      </section>
+       </section>
+       </FadeIn>
 
       {relatedProjects.length > 0 && (
-        <section className="mt-16">
+        <FadeIn className="mt-16">
+        <section>
           <p className="eyebrow">More Work</p>
           <div className="mt-4 grid gap-6 lg:grid-cols-2">
             {relatedProjects.map((item) => (
@@ -404,7 +488,8 @@ export default async function WorkDetailPage({ params }: Props) {
             ))}
           </div>
         </section>
+        </FadeIn>
       )}
-    </main>
+    </div>
   );
 }

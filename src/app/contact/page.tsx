@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { MailIcon, WhatsAppIcon } from "@/components/ui/social-icons";
+import { FadeIn } from "@/components/ui/fade-in";
 
 type FormValues = {
   name: string;
@@ -60,8 +61,9 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-12">
       <section className="grid gap-12 lg:grid-cols-[1fr_1fr]">
+        <FadeIn>
         <div>
           <p className="eyebrow">Contact</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">
@@ -101,8 +103,9 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
+        </FadeIn>
 
-        <div className="card p-8">
+        <FadeIn delay={0.08} className="card p-8">
           <p className="eyebrow">Project Inquiry</p>
           <form
             className="mt-6 grid gap-4"
@@ -213,7 +216,11 @@ export default function ContactPage() {
                 </p>
               ) : null}
             </div>
-            <button type="submit" className="btn btn-primary w-full">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60"
+            >
               {isSubmitting ? "Sending..." : "Send Inquiry"}
             </button>
             <p className="text-sm text-muted" aria-live="polite">
@@ -224,8 +231,8 @@ export default function ContactPage() {
                 : null}
             </p>
           </form>
-        </div>
+        </FadeIn>
       </section>
-    </main>
+    </div>
   );
 }

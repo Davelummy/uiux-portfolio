@@ -18,6 +18,11 @@ describe("getProjects", () => {
     expect(results.length).toBe(2);
   });
 
+  it("treats a zero limit as an empty result", async () => {
+    const results = await getProjects({ publishedOnly: true, limit: 0 });
+    expect(results).toEqual([]);
+  });
+
   it("returns all projects when publishedOnly is false", async () => {
     const results = await getProjects({ publishedOnly: false });
     expect(results.length).toBeGreaterThanOrEqual(4);
@@ -29,6 +34,26 @@ describe("getProjectBySlug", () => {
     const project = await getProjectBySlug("crystalline-max");
     expect(project).not.toBeNull();
     expect(project?.title).toBe("Crystalline Max");
+  });
+
+  it("includes Neon Breach as a published case study with verified links and gallery", async () => {
+    const project = await getProjectBySlug("neon-breach");
+
+    expect(project).toMatchObject({
+      isPublished: true,
+      liveUrl: "https://neon-breach-fps.netlify.app/",
+      liveCtaLabel: "Play Game",
+      sourceUrl: "https://github.com/Davelummy/neon-breach",
+      sourceCtaLabel: "View Source"
+    });
+    expect(project?.gallery).toHaveLength(5);
+  });
+
+  it("places Neon Breach first among non-featured published projects", async () => {
+    const results = await getProjects({ publishedOnly: true });
+    const nonFeatured = results.filter((project) => !project.isFeatured);
+
+    expect(nonFeatured[0]?.slug).toBe("neon-breach");
   });
 
   it("returns null for non-existent slug", async () => {

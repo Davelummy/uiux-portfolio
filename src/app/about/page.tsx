@@ -4,7 +4,7 @@ import { StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-12">
       <StaggerContainer className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <StaggerItem>
@@ -81,6 +81,6 @@ export default function AboutPage() {
           </div>
         </StaggerItem>
       </StaggerContainer>
-    </main>
+    </div>
   );
 }

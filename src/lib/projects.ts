@@ -13,6 +13,16 @@ export type ProjectCover = {
   foreground: string;
 };
 
+export type ProjectMedia = {
+  src: string;
+  alt: string;
+  caption: string;
+  label?: string;
+  presentation?: "capture" | "object" | "material";
+  width: number;
+  height: number;
+};
+
 export type Project = {
   id: string;
   slug: string;
@@ -41,6 +51,10 @@ export type Project = {
   behanceUrl: string | null;
   figmaEmbed: string | null;
   liveUrl: string | null;
+  liveCtaLabel?: string;
+  sourceUrl?: string | null;
+  sourceCtaLabel?: string;
+  gallery?: ProjectMedia[];
   isFeatured: boolean;
   isPublished: boolean;
   sortOrder: number;
@@ -101,7 +115,7 @@ const PROJECTS: Project[] = [
     solution:
       "A fully functional React/Firebase MVP that allows users to discover, visualize in AR, and purchase premium furniture, while empowering artisans to manage their own storefronts.",
     outcome:
-      "Delivered a production-ready MVP capable of onboarding sellers and processing real transactions, complete with an innovative AR shopping feature.",
+      "Built an MVP covering customer, seller, product-preview, and checkout flows. Production usage and transaction outcomes are not reported here.",
     highlights: [
       "Augmented Reality (AR) product visualization.",
       "Dedicated portal for artisans/sellers.",
@@ -123,7 +137,7 @@ const PROJECTS: Project[] = [
     blurDataUrl: BLUR_DATA_URL,
     behanceUrl: null,
     figmaEmbed: null,
-    liveUrl: "https://your-kasada-deployed-link.com",
+    liveUrl: null,
     isFeatured: false,
     isPublished: true,
     sortOrder: 4,
@@ -142,7 +156,7 @@ const PROJECTS: Project[] = [
     tools: ["Figma", "React", "Next.js", "Tailwind CSS", "Framer Motion"],
     team: "Solo designer and developer",
     summary:
-      "A high-converting, motion-rich landing page designed to showcase Crystalline Max's professional cleaning services and convert visitors into WhatsApp leads.",
+      "Responsive marketing site for Crystalline Max, designed and built to clarify cleaning services and route enquiries to WhatsApp.",
     overview:
       "Designed and developed a modern landing page to market Crystalline Max's cleaning business. The focus was on establishing trust, clearly communicating service offerings, and driving booking inquiries through WhatsApp with a seamless conversion flow.",
     problem:
@@ -179,7 +193,7 @@ const PROJECTS: Project[] = [
     solution:
       "A fast, beautifully animated marketing page that establishes the Crystalline Max brand, clearly presents their services, and channels leads directly into WhatsApp conversations.",
     outcome:
-      "Successfully launched the brand's first digital presence — a marketing site that drives real booking inquiries through a streamlined WhatsApp conversion funnel.",
+      "Delivered the brand's first digital presence and a direct WhatsApp enquiry path. Conversion performance is not reported here.",
     highlights: [
       "Smooth scroll animations using Framer Motion.",
       "WhatsApp-first conversion flow for instant lead capture.",
@@ -359,6 +373,142 @@ const PROJECTS: Project[] = [
     sortOrder: 1,
     createdAt: "2024-03-20",
     updatedAt: "2024-05-02"
+  },
+  {
+    id: "neon-breach",
+    slug: "neon-breach",
+    title: "Neon Breach",
+    client: "Independent Project",
+    year: "2026",
+    category: "Game Design & Development",
+    role: "Game Designer & Full-Stack Developer",
+    duration: "Ongoing",
+    tools: [
+      "JavaScript",
+      "Three.js",
+      "WebGL2",
+      "Web Audio API",
+      "Netlify Functions",
+      "Netlify Blobs"
+    ],
+    team: "Solo designer and developer",
+    summary:
+      "A browser-native 3D tactical FPS featuring three campaign operations, squad-based enemy AI, multi-phase boss encounters, vehicles, progression, and global leaderboards.",
+    overview:
+      "Neon Breach is a playable friends-and-family beta built to explore how far a browser-native game can push atmosphere, systems design, and responsive interaction without an install.",
+    problem:
+      "The project needed to make a technically ambitious FPS feel immediate in a browser while keeping its systems legible across keyboard, controller, and touch input.",
+    goals: [
+      "Create a memorable tactical visual language for a standalone browser game.",
+      "Build a campaign structure with meaningful mission and progression loops.",
+      "Support responsive input across desktop, controller, and touch devices.",
+      "Keep the game deployable as a self-contained Netlify experience."
+    ],
+    responsibilities: [
+      "Designed the game loop, mission structure, HUD, menus, and progression model.",
+      "Built the browser client with JavaScript, Three.js, WebGL2, and Web Audio API.",
+      "Implemented squad-based enemy AI, boss encounters, vehicles, and input systems.",
+      "Built Netlify Functions and Netlify Blobs integrations for campaign saves and leaderboards.",
+      "Profiled the renderer and tuned asset loading for a playable browser beta."
+    ],
+    approach: [
+      {
+        title: "Systems before spectacle",
+        detail:
+          "Established operations, enemy archetypes, progression, and objective states before layering on visual effects and atmosphere."
+      },
+      {
+        title: "A readable tactical language",
+        detail:
+          "Used cyan mission instrumentation, angular panels, clear objective copy, and a restrained HUD to make a dense game state scannable."
+      },
+      {
+        title: "Browser-native constraints",
+        detail:
+          "Balanced WebGL2 rendering, audio, controller support, touch controls, and serverless persistence against the realities of a public web deployment."
+      }
+    ],
+    solution:
+      "A standalone browser FPS with three operations, six enemy archetypes, multi-phase boss encounters, vehicles, progression, controller support, and a shared leaderboard.",
+    outcome:
+      "A live, playable friends-and-family beta that demonstrates end-to-end game design and engineering ownership. It is intentionally presented as an evolving independent project, not a finished commercial release.",
+    highlights: [
+      "Three campaign operations with mission objectives.",
+      "Six enemy archetypes with squad-based behavior.",
+      "WebGL2 renderer with vehicles and multi-phase encounters.",
+      "Progression, controller support, and global leaderboard systems."
+    ],
+    metrics: [
+      { value: "3", label: "Operations" },
+      { value: "6", label: "Enemy Archetypes" },
+      { value: "WebGL2", label: "Renderer" },
+      { value: "Live Beta", label: "Status" }
+    ],
+    tags: ["Game Design", "Frontend", "Three.js", "WebGL2", "Full-Stack"],
+    cover: {
+      background: "linear-gradient(135deg, #06141c 0%, #102b34 50%, #563d8f 100%)",
+      foreground: "#ffffff"
+    },
+    coverImageUrl: "/projects/neon-breach-cover.jpg",
+    blurDataUrl: BLUR_DATA_URL,
+    behanceUrl: null,
+    figmaEmbed: null,
+    liveUrl: "https://neon-breach-fps.netlify.app/",
+    liveCtaLabel: "Play Game",
+    sourceUrl: "https://github.com/Davelummy/neon-breach",
+    sourceCtaLabel: "View Source",
+    gallery: [
+      {
+        src: "/projects/neon-breach-gameplay.jpg",
+        alt: "Neon Breach extraction mission with the tactical HUD, objective banner, squad enemies, and weapon state visible",
+        caption: "Gameplay capture from the Burn Out extraction operation.",
+        label: "IN-GAME CAPTURE",
+        presentation: "capture",
+        width: 800,
+        height: 600
+      },
+      {
+        src: "/projects/neon-breach-interceptor.webp",
+        alt: "Angular dark interceptor vehicle with cyan accent lights from Neon Breach",
+        caption: "Interceptor vehicle asset used in the game's vehicle phase.",
+        label: "PROCEDURAL VEHICLE",
+        presentation: "object",
+        width: 980,
+        height: 653
+      },
+      {
+        src: "/projects/neon-breach-interceptor-side.webp",
+        alt: "Side profile of the angular Neon Breach interceptor vehicle with cyan accent lights",
+        caption: "Side profile from the interceptor's vehicle asset study.",
+        label: "OBJECT STUDY / SIDE",
+        presentation: "object",
+        width: 980,
+        height: 464
+      },
+      {
+        src: "/projects/neon-breach-interceptor-rear.webp",
+        alt: "Rear view of the angular Neon Breach interceptor vehicle with cyan accent lights",
+        caption: "Rear profile from the interceptor's vehicle asset study.",
+        label: "OBJECT STUDY / REAR",
+        presentation: "object",
+        width: 980,
+        height: 653
+      },
+      {
+        src: "/projects/neon-breach-environment.webp",
+        alt: "Dark industrial wall material used to build Neon Breach environments",
+        caption: "A modular environment material from the renderer's asset set.",
+        label: "MATERIAL STUDY",
+        presentation: "material",
+        width: 512,
+        height: 512
+      }
+    ],
+    isFeatured: false,
+    isPublished: true,
+    sortOrder: 5,
+    createdAt: "2026-01-15",
+    updatedAt: "2026-07-23"
   }
 ];
 
@@ -386,11 +536,13 @@ export async function getProjects(options?: {
     ? PROJECTS.filter((project) => project.isPublished)
     : PROJECTS;
   const sorted = sortProjects(filtered);
-  return limit ? sorted.slice(0, limit) : sorted;
+  return limit == null ? sorted : sorted.slice(0, Math.max(0, limit));
 }
 
 export async function getFeaturedProjects() {
-  return sortProjects(PROJECTS).filter((project) => project.isFeatured);
+  return sortProjects(PROJECTS).filter(
+    (project) => project.isFeatured && project.isPublished,
+  );
 }
 
 export async function getProjectCategories() {

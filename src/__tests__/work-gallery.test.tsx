@@ -20,6 +20,13 @@ describe("WorkGallery", () => {
     });
   });
 
+  it("renders Neon Breach as a single discoverable case-study link", () => {
+    render(<WorkGallery projects={projects} />);
+    const link = screen.getByRole("link", { name: /Neon Breach/ });
+
+    expect(link.getAttribute("href")).toBe("/work/neon-breach");
+  });
+
   it("filters projects when a filter button is clicked", async () => {
     render(<WorkGallery projects={projects} />);
     const filterBtn = screen.getByRole("button", { name: "UI/UX Design" });

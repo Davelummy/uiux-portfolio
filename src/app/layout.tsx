@@ -1,7 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { Manrope, Sora } from "next/font/google";
 import {
   BehanceIcon,
   MailIcon,
@@ -10,32 +9,23 @@ import {
 
 import { SmoothScrollProvider } from "@/components/ui/smooth-scroll";
 import { FloatingWhatsApp } from "@/components/ui/floating-whatsapp";
-
-const displayFont = Sora({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "500", "600", "700"]
-});
-
-const bodyFont = Manrope({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  weight: ["400", "500", "600", "700"]
-});
+import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { MotionProvider } from "@/components/ui/motion-provider";
+import { FadeIn } from "@/components/ui/fade-in";
 
 export const metadata = {
-  metadataBase: new URL("https://davidolumide.com"),
+  metadataBase: new URL(SITE_URL),
   title: "David Olumide Daniel | Product Designer & Software Engineer",
   description:
-    "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products.",
+    "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production.",
   robots: { index: true, follow: true },
-  alternates: { canonical: "https://davidolumide.com" },
+  alternates: { canonical: SITE_URL },
   openGraph: {
     title: "David Olumide Daniel | Product Designer & Software Engineer",
     description:
-      "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products.",
-    url: "https://davidolumide.com",
-    siteName: "David Olumide Daniel",
+      "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }]
@@ -44,15 +34,16 @@ export const metadata = {
     card: "summary_large_image",
     title: "David Olumide Daniel | Product Designer & Software Engineer",
     description:
-      "Abuja-based Product Designer and Software Engineer crafting accessible, high-conversion, full-stack digital products."
+      "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production."
   }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${bodyFont.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth">
       <body className="min-h-screen text-ink">
-        <SmoothScrollProvider>
+        <MotionProvider>
+          <SmoothScrollProvider>
           <a
             href="#content"
             className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
@@ -74,7 +65,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   </span>
                 </Link>
 
-                <nav className="flex flex-wrap items-center gap-5 text-sm font-medium text-ink-soft">
+                <nav
+                  aria-label="Primary navigation"
+                  className="order-3 flex basis-full flex-wrap items-center justify-center gap-5 text-sm font-medium text-ink-soft sm:order-none sm:basis-auto"
+                >
                   <Link href="/work" className="transition hover:text-accent">
                     Work
                   </Link>
@@ -86,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   </Link>
                 </nav>
 
-                <div className="flex items-center gap-3">
+                <div className="hidden items-center gap-3 sm:flex">
                   <Link href="/contact" className="btn btn-ghost">
                     Contact
                   </Link>
@@ -97,11 +91,38 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               </div>
             </header>
 
-            <main id="content" className="min-h-screen">
-              {children}
+             <main id="content" className="min-h-screen">
+               <script
+                 type="application/ld+json"
+                 dangerouslySetInnerHTML={{
+                   __html: JSON.stringify({
+                     "@context": "https://schema.org",
+                     "@graph": [
+                       {
+                         "@type": "Person",
+                         "@id": `${SITE_URL}/#person`,
+                         name: SITE_NAME,
+                         url: SITE_URL,
+                         jobTitle: "Product Designer and Software Engineer",
+                         email: "mailto:Davidolumide123@gmail.com",
+                         sameAs: ["https://www.behance.net/davelummy"]
+                       },
+                       {
+                         "@type": "WebSite",
+                         "@id": `${SITE_URL}/#website`,
+                         name: SITE_NAME,
+                         url: SITE_URL,
+                         about: { "@id": `${SITE_URL}/#person` }
+                       }
+                     ]
+                   })
+                 }}
+               />
+               {children}
             </main>
 
             <footer className="border-t border-border">
+              <FadeIn>
               <div className="mx-auto grid max-w-6xl gap-6 px-6 py-10 text-sm md:grid-cols-3 md:items-center">
                 <div>
                   <p className="text-sm font-semibold">David Olumide Daniel</p>
@@ -150,10 +171,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   </a>
                 </div>
               </div>
+              </FadeIn>
             </footer>
-            <FloatingWhatsApp />
+             <FloatingWhatsApp />
           </div>
-        </SmoothScrollProvider>
+          </SmoothScrollProvider>
+        </MotionProvider>
       </body>
     </html>
   );

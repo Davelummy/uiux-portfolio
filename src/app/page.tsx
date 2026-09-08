@@ -49,14 +49,19 @@ const processSteps = [
 
 export default async function Home() {
   const projects = await getProjects({ publishedOnly: true });
-  const featuredProjects = projects.filter((p) => !p.isFeatured).slice(0, 3);
   const heroProject =
     projects.find((project) => project.isFeatured) ?? projects[0];
+  const selectedProjects = projects
+    .filter((project) => project.slug !== heroProject?.slug)
+    .slice(0, 3);
   const clients = Array.from(
     new Set(
       projects
         .map((project) => project.client)
-        .filter((value): value is string => Boolean(value))
+        .filter(
+          (value): value is string =>
+            Boolean(value) && value !== "Independent Project",
+        )
     )
   );
   const categoryCount = new Set(
@@ -67,27 +72,27 @@ export default async function Home() {
   const stats = [
     { value: `${projects.length}`, label: "Case Studies" },
     { value: `${clients.length}`, label: "Client Partners" },
-    { value: `${categoryCount}`, label: "Industries" }
+    { value: `${categoryCount}`, label: "Disciplines" }
   ];
   const heroMeta = heroProject
     ? [heroProject.client, heroProject.year].filter(Boolean).join(" / ")
     : "";
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-12">
       <section className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
         <StaggerContainer className="space-y-6">
-          <StaggerItem direction="up">
+          <StaggerItem>
             <p className="eyebrow">Abuja - Product Designer & Engineer</p>
           </StaggerItem>
           
-          <StaggerItem direction="up">
+          <StaggerItem>
             <h1 className="text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl text-balance">
               I design and build digital products people trust.
             </h1>
           </StaggerItem>
           
-          <StaggerItem direction="up">
+          <StaggerItem>
             <p className="max-w-xl text-lg text-muted text-balance">
               Blending product design with full-stack development, I create clear,
               usable flows and robust codebases that help teams ship end-to-end 
@@ -95,7 +100,7 @@ export default async function Home() {
             </p>
           </StaggerItem>
           
-          <StaggerItem direction="up" className="flex flex-wrap gap-4 pt-2">
+          <StaggerItem className="flex flex-wrap gap-4 pt-2">
             <Link href="/work" className="btn btn-primary">
               View Work
             </Link>
@@ -104,7 +109,7 @@ export default async function Home() {
             </Link>
           </StaggerItem>
           
-          <StaggerItem direction="up" className="flex flex-wrap gap-2 pt-2">
+          <StaggerItem className="flex flex-wrap gap-2 pt-2">
             {["Mobile-first UI", "Responsive UX", "Research-led"].map(
               (item) => (
                 <span key={item} className="pill">
@@ -114,7 +119,7 @@ export default async function Home() {
             )}
           </StaggerItem>
           
-          <StaggerItem direction="up" className="grid gap-3 sm:grid-cols-3 pt-6">
+          <StaggerItem className="grid gap-3 sm:grid-cols-3 pt-6">
             {stats.map((stat) => (
               <div key={stat.label} className="stat">
                 <p className="stat-value">{stat.value}</p>
@@ -124,7 +129,7 @@ export default async function Home() {
           </StaggerItem>
         </StaggerContainer>
 
-        <FadeIn direction="left" delay={0.3} className="card overflow-hidden animate-float">
+        <FadeIn delay={0.3} className="card overflow-hidden animate-float">
           {heroProject ? (
             <>
               <div
@@ -228,11 +233,11 @@ export default async function Home() {
           <div>
             <p className="eyebrow">Selected Work</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
-              Case studies that show clarity and impact.
+              Case studies across product design and delivery.
             </h2>
             <p className="mt-4 max-w-xl text-muted text-balance">
-              A snapshot of projects where I led UX/UI, flow mapping, and
-              interface systems from start to prototype.
+              A snapshot of projects where I led UX/UI, flow mapping, interface
+              systems, and full-stack implementation from first flow to beta.
             </p>
           </div>
           {projects.length > 0 ? (
@@ -247,7 +252,7 @@ export default async function Home() {
 
         {projects.length > 0 ? (
           <StaggerContainer className="mt-10 grid gap-6 lg:grid-cols-3">
-            {featuredProjects.map((project) => (
+            {selectedProjects.map((project) => (
               <StaggerItem key={project.slug}>
                 <Link
                   href={`/work/${project.slug}`}
@@ -351,7 +356,7 @@ export default async function Home() {
 
       <section className="mt-20">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <FadeIn direction="right">
+          <FadeIn>
             <p className="eyebrow">Process</p>
             <h2 className="mt-3 text-3xl font-semibold sm:text-4xl text-balance">
               A clear, collaborative design process.
@@ -413,7 +418,7 @@ export default async function Home() {
         </div>
       </FadeIn>
 
-      <FadeIn direction="up" delay={0.2} className="mt-20">
+      <FadeIn delay={0.2} className="mt-20">
         <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float shadow-lg border-white/50 bg-white/40">
           <p className="eyebrow">Next Project</p>
           <h2 className="text-3xl font-semibold sm:text-4xl">
@@ -428,6 +433,6 @@ export default async function Home() {
           </Link>
         </div>
       </FadeIn>
-    </main>
+    </div>
   );
 }

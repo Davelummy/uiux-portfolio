@@ -4,7 +4,8 @@ import { ReactNode } from "react";
 export const metadata: Metadata = {
   title: "About | David Olumide Daniel",
   description:
-    "Abuja-based Product Designer and Full-Stack Developer bridging design and engineering."
+    "About David Olumide Daniel, a product designer and full-stack developer bridging design and engineering.",
+  alternates: { canonical: "/about" }
 };
 
 export default function AboutLayout({ children }: { children: ReactNode }) {

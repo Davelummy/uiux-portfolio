@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://davidolumide.com/sitemap.xml
+Sitemap: https://thedavidolumidebrandportfolio.netlify.app/sitemap.xml

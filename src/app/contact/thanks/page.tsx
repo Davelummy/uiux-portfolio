@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { FadeIn } from "@/components/ui/fade-in";
 
 export const metadata: Metadata = {
   title: "Thank You | David Olumide Daniel",
@@ -8,7 +9,8 @@ export const metadata: Metadata = {
 
 export default function ContactThanksPage() {
   return (
-    <main className="mx-auto max-w-4xl px-6 pb-24 pt-16">
+    <div className="mx-auto max-w-4xl px-6 pb-24 pt-16">
+      <FadeIn>
       <section className="card flex flex-col items-center gap-4 px-8 py-12 text-center">
         <p className="eyebrow">Thank you</p>
         <h1 className="text-3xl font-semibold sm:text-4xl">
@@ -27,6 +29,7 @@ export default function ContactThanksPage() {
           </Link>
         </div>
       </section>
-    </main>
+      </FadeIn>
+    </div>
   );
 }

@@ -4,11 +4,9 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, LayoutGrid, LayoutList, Search } from "lucide-react";
 import type { Project } from "@/lib/projects";
 import { getCoverStyle } from "@/lib/utils/image-utils";
-import { BehanceIcon } from "@/components/ui/social-icons";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 type ViewMode = "grid" | "list";
@@ -24,7 +22,8 @@ const FILTERS = [
   "Frontend",
   "Full-Stack",
   "Mobile Design",
-  "Figma Prototype"
+  "Figma Prototype",
+  "Game Design"
 ] as const;
 
 function matchesQuery(project: Project, query: string) {
@@ -46,7 +45,6 @@ function matchesQuery(project: Project, query: string) {
 }
 
 export default function WorkGallery({ projects }: Props) {
-  const reducedMotion = useReducedMotion() ?? true;
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
   const [viewMode, setViewMode] = useState<ViewMode>("list");
@@ -55,7 +53,10 @@ export default function WorkGallery({ projects }: Props) {
     const clientCount = new Set(
       projects
         .map((project) => project.client)
-        .filter((value): value is string => Boolean(value))
+        .filter(
+          (value): value is string =>
+            Boolean(value) && value !== "Independent Project",
+        ),
     ).size;
     const categoryCount = new Set(
       projects
@@ -80,12 +81,12 @@ export default function WorkGallery({ projects }: Props) {
   const hasActiveFilter = query.trim().length > 0 || activeFilter !== "All";
 
   return (
-    <main className="mx-auto max-w-6xl px-6 pb-24 pt-12">
-      <FadeIn direction="up">
+    <div className="mx-auto max-w-6xl px-6 pb-24 pt-12">
+      <FadeIn>
         <header className="max-w-3xl">
           <p className="eyebrow">Work</p>
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl text-balance">
-            Case studies that show strategy, craft, and results.
+            Case studies that show strategy, craft, and delivery.
           </h1>
           <p className="mt-4 text-muted text-balance">
             Explore projects that highlight UX problem-solving, visual craft, and
@@ -117,7 +118,7 @@ export default function WorkGallery({ projects }: Props) {
             ))}
           </StaggerContainer>
 
-          <FadeIn delay={0.15} direction="up" className="mt-10">
+          <FadeIn delay={0.15} className="mt-10">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-3 rounded-2xl border border-border bg-white px-4 py-3 shadow-sm min-w-[260px] max-w-sm flex-1">
                 <Search className="h-4 w-4 text-muted" aria-hidden />
@@ -131,7 +132,7 @@ export default function WorkGallery({ projects }: Props) {
                 />
               </div>
               <div className="flex gap-2">
-                  {(
+                {(
                   [
                     { id: "list", icon: LayoutList },
                     { id: "grid", icon: LayoutGrid }
@@ -206,9 +207,7 @@ export default function WorkGallery({ projects }: Props) {
                 </p>
               </div>
             ) : (
-              <motion.div
-                layout={!reducedMotion}
-                suppressHydrationWarning
+              <div
                 className={clsx(
                   "mt-6 gap-6",
                   viewMode === "grid"
@@ -216,31 +215,12 @@ export default function WorkGallery({ projects }: Props) {
                     : "grid grid-cols-1"
                 )}
               >
-                <AnimatePresence mode="popLayout">
-                  {filteredProjects.map((project) => (
-                    <motion.article
-                      key={project.id}
-                      layout={!reducedMotion}
-                      suppressHydrationWarning
-                      initial={
-                        reducedMotion ? false : { opacity: 0, y: 16 }
-                      }
-                      animate={
-                        reducedMotion
-                          ? { opacity: 1 }
-                          : { opacity: 1, y: 0 }
-                      }
-                      exit={
-                        reducedMotion
-                          ? { opacity: 0 }
-                          : { opacity: 0, y: -16 }
-                      }
-                      transition={{ duration: 0.25 }}
-                      className="mb-6"
-                    >
-                      <div
+                {filteredProjects.map((project) => (
+                  <article key={project.id} className="mb-6">
+                      <Link
+                        href={`/work/${project.slug}`}
                         className={clsx(
-                          "card flex h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-md",
+                          "card group flex h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-md",
                           viewMode === "list" ? "sm:flex-row" : "flex-col"
                         )}
                       >
@@ -250,45 +230,43 @@ export default function WorkGallery({ projects }: Props) {
                             viewMode === "list" ? "sm:w-[40%] shrink-0" : ""
                           )}
                         >
-                          <Link href={`/work/${project.slug}`} className="block focus-ring">
-                            <div
-                              className={clsx(
-                                "relative p-6 text-white min-h-[200px] flex flex-col justify-end overflow-hidden",
-                                viewMode === "list" ? "sm:min-h-[220px]" : ""
-                              )}
-                            >
-                              {project.coverImageUrl ? (
-                                <>
-                                  <Image
-                                    src={project.coverImageUrl}
-                                    alt={project.title}
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 50vw"
-                                    className="object-cover"
-                                    placeholder={
-                                      project.blurDataUrl ? "blur" : "empty"
-                                    }
-                                    blurDataURL={project.blurDataUrl ?? undefined}
-                                  />
-                                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
-                                </>
-                              ) : (
-                                <div className="absolute inset-0" style={getCoverStyle(project)} />
-                              )}
-                              <p className="relative z-10 text-xs uppercase tracking-[0.2em] text-white/70">
-                                {project.category}
-                              </p>
-                              <h3 className="relative z-10 mt-1.5 text-xl font-semibold">
-                                {project.title}
-                              </h3>
-                              <p className="relative z-10 mt-1 text-sm text-white/80 line-clamp-2">
-                                {project.summary ?? project.overview}
-                              </p>
-                            </div>
-                          </Link>
+                          <div
+                            className={clsx(
+                              "relative p-6 text-white min-h-[200px] flex flex-col justify-end overflow-hidden",
+                              viewMode === "list" ? "sm:min-h-[220px]" : ""
+                            )}
+                          >
+                            {project.coverImageUrl ? (
+                              <>
+                                <Image
+                                  src={project.coverImageUrl}
+                                  alt={project.title}
+                                  fill
+                                  sizes="(max-width: 1024px) 100vw, 50vw"
+                                  className="object-cover"
+                                  placeholder={
+                                    project.blurDataUrl ? "blur" : "empty"
+                                  }
+                                  blurDataURL={project.blurDataUrl ?? undefined}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+                              </>
+                            ) : (
+                              <div className="absolute inset-0" style={getCoverStyle(project)} />
+                            )}
+                            <p className="relative z-10 text-xs uppercase tracking-[0.2em] text-white/70">
+                              {project.category}
+                            </p>
+                            <h3 className="relative z-10 mt-1.5 text-xl font-semibold">
+                              {project.title}
+                            </h3>
+                            <p className="relative z-10 mt-1 text-sm text-white/80 line-clamp-2">
+                              {project.summary ?? project.overview}
+                            </p>
+                          </div>
                         </div>
                         <div className="flex flex-1 flex-col gap-3 p-5">
-                          <Link href={`/work/${project.slug}`} className="flex flex-1 flex-col gap-3 focus-ring">
+                          <div className="flex flex-1 flex-col gap-3">
                             <div className="flex items-center justify-between text-xs text-muted">
                               <span>{project.role}</span>
                               <span>{project.duration}</span>
@@ -303,37 +281,22 @@ export default function WorkGallery({ projects }: Props) {
                                 </span>
                               ))}
                             </div>
-                          </Link>
-                          <div className="mt-auto flex flex-wrap items-center gap-3 text-sm font-semibold text-ink">
-                            <Link
-                              href={`/work/${project.slug}`}
-                              className="inline-flex items-center gap-2 focus-ring"
-                            >
+                          </div>
+                          <div className="mt-auto flex items-center gap-3 text-sm font-semibold text-ink">
+                            <span className="inline-flex items-center gap-2">
                               View case study
                               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                            </Link>
-                            {project.behanceUrl ? (
-                              <a
-                                href={project.behanceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-xs font-semibold text-accent transition hover:text-ink"
-                              >
-                                <BehanceIcon className="h-3.5 w-3.5" />
-                                Behance
-                              </a>
-                            ) : null}
+                            </span>
                           </div>
                         </div>
-                      </div>
-                    </motion.article>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
+                      </Link>
+                  </article>
+                ))}
+              </div>
             )}
           </section>
 
-          <FadeIn direction="up" className="mt-20">
+          <FadeIn className="mt-20">
             <div className="card flex flex-col items-center gap-6 px-8 py-12 text-center animate-float shadow-lg border-white/50 bg-white/40">
               <p className="eyebrow">Next Step</p>
               <h2 className="text-3xl font-semibold sm:text-4xl">
@@ -350,6 +313,6 @@ export default function WorkGallery({ projects }: Props) {
           </FadeIn>
         </>
       )}
-    </main>
+    </div>
   );
 }
