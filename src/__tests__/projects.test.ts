@@ -49,11 +49,11 @@ describe("getProjectBySlug", () => {
     expect(project?.gallery).toHaveLength(5);
   });
 
-  it("places Neon Breach first among non-featured published projects", async () => {
+  it("places Threvelonbase first among non-featured published projects", async () => {
     const results = await getProjects({ publishedOnly: true });
     const nonFeatured = results.filter((project) => !project.isFeatured);
 
-    expect(nonFeatured[0]?.slug).toBe("neon-breach");
+    expect(nonFeatured[0]?.slug).toBe("threvelonbase");
   });
 
   it("returns null for non-existent slug", async () => {

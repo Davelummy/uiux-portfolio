@@ -67,6 +67,59 @@ const BLUR_DATA_URL =
 
 const PROJECTS: Project[] = [
   {
+    id: "threvelonbase",
+    slug: "threvelonbase",
+    title: "Threvelonbase",
+    client: "Threvelonbase",
+    year: "2026",
+    category: "Web Design",
+    role: "Web Designer & Developer",
+    duration: null,
+    tools: ["Next.js", "React", "TypeScript", "Tailwind CSS", "GSAP", "Netlify"],
+    team: null,
+    summary: "A repair-first electronics website that turns a broad service offering into clear paths for repair, device and training enquiries.",
+    overview: "Designed and built a responsive website for Threvelonbase, an electronics repair and technical-training business. The experience prioritises repair requests while making devices, accessories, training and business services easy to discover.",
+    problem: "The website needed to explain several related services without distracting from the primary task: helping a customer describe a faulty device and contact the workshop.",
+    goals: [
+      "Give repair customers a clear primary action and service navigation.",
+      "Collect useful device and fault details before the WhatsApp conversation.",
+      "Explain diagnosis, pricing approval and next steps before a customer enquires.",
+      "Keep training, device and business enquiries distinct and easy to find."
+    ],
+    responsibilities: [
+      "Structured the service hierarchy and repair-enquiry journey.",
+      "Designed the visual hierarchy, responsive layouts and light/dark presentation.",
+      "Built the website and contextual WhatsApp enquiry paths.",
+      "Presented workshop information, service stages and FAQs throughout the experience."
+    ],
+    approach: [
+      { title: "Repairs lead the experience", detail: "The headline and primary action focus on repairs. Separate service cards guide visitors interested in devices, accessories, training or business support." },
+      { title: "A useful brief before the conversation", detail: "The repair form asks for the device, model, fault and preferred next step. It prepares an editable WhatsApp draft so customers can review their message before sending." },
+      { title: "Set expectations at the decision point", detail: "Copy beside the form explains that diagnosis comes before a confirmed price or repair timing, and that the customer approves work before it begins. The page also explains that submissions are not stored in a website account." }
+    ],
+    solution: "A responsive service website with a prominent repair journey, contextual enquiry links, training and business-service sections, FAQs, and light/dark themes. Repair enquiries continue in WhatsApp without website payments or customer accounts.",
+    outcome: "Delivered a live website with a structured path from service discovery to a repair enquiry. Enquiry volume, conversion performance and customer research results are not reported here.",
+    highlights: ["Repair-first navigation and clear service categories.", "Guided repair brief with an editable WhatsApp handoff.", "Pricing and diagnosis expectations explained before enquiry.", "Responsive layouts with light and dark themes."],
+    metrics: [{ value: "Web", label: "Platform" }, { value: "Live", label: "Delivery" }, { value: "WhatsApp", label: "Enquiry channel" }],
+    tags: ["UI/UX Design", "Web Design", "Frontend", "Service Business"],
+    cover: { background: "linear-gradient(135deg, #050914 0%, #142038 65%, #aa540d 100%)", foreground: "#ffffff" },
+    coverImageUrl: "/projects/threvelonbase-home.webp",
+    blurDataUrl: null,
+    behanceUrl: null,
+    figmaEmbed: null,
+    liveUrl: "https://threvelonbase.netlify.app/",
+    liveCtaLabel: "Visit Website",
+    gallery: [
+      { src: "/projects/threvelonbase-home.webp", alt: "Threvelonbase desktop homepage with repair-focused headline, service navigation and Start a repair action", caption: "A repair-first homepage gives the main customer task a clear starting point.", label: "SERVICE HIERARCHY", presentation: "capture", width: 1265, height: 712 },
+      { src: "/projects/threvelonbase-repair.webp", alt: "Threvelonbase repair request form alongside diagnosis, approval and privacy information", caption: "The repair brief groups device and fault details beside clear expectations for the WhatsApp handoff.", label: "REPAIR ENQUIRY", presentation: "capture", width: 1265, height: 712 }
+    ],
+    isFeatured: false,
+    isPublished: true,
+    sortOrder: 6,
+    createdAt: "2026-09-08",
+    updatedAt: "2026-09-08"
+  },
+  {
     id: "kasada-mvp",
     slug: "kasada-mvp",
     title: "Kasada MVP",
