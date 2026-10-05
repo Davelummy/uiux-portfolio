@@ -7,6 +7,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { BehanceIcon } from "@/components/ui/social-icons";
 import { SITE_URL } from "@/lib/site";
+import { ProjectCard } from "@/components/work/project-card";
+import { PrototypePreview } from "@/components/work/prototype-preview";
 import { CaseStudyGallery } from "@/components/work/case-study-gallery";
 import { FadeIn } from "@/components/ui/fade-in";
 
@@ -353,16 +355,11 @@ export default async function WorkDetailPage({ params }: Props) {
             ) : null}
           </div>
         ) : project.figmaEmbed ? (
-          <div className="card mt-4 overflow-hidden">
-            <div className="aspect-video">
-              <iframe
-                title={`${project.title} Figma Preview`}
-                src={project.figmaEmbed}
-                className="h-full w-full"
-                allowFullScreen
-              />
-            </div>
-          </div>
+          <PrototypePreview
+            title={project.title}
+            embedUrl={project.figmaEmbed}
+            imageUrl={project.coverImageUrl}
+          />
         ) : project.behanceUrl ? (
           <div className="card mt-4 p-6">
             <p className="text-sm text-muted">
@@ -399,62 +396,9 @@ export default async function WorkDetailPage({ params }: Props) {
         <FadeIn className="mt-16">
         <section>
           <p className="eyebrow">More Work</p>
-          <div className="mt-4 grid gap-6 lg:grid-cols-2">
+          <div className="mt-4 grid gap-6 md:grid-cols-2">
             {relatedProjects.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/work/${item.slug}`}
-                className="card group flex h-full flex-col overflow-hidden transition hover:-translate-y-1"
-              >
-                <div
-                  className="relative overflow-hidden"
-                  style={item.coverImageUrl ? undefined : getCoverStyle(item)}
-                >
-                  {item.coverImageUrl ? (
-                    <>
-                      <Image
-                        src={item.coverImageUrl}
-                        alt={item.title}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover"
-                        placeholder={item.blurDataUrl ? "blur" : "empty"}
-                        blurDataURL={item.blurDataUrl ?? undefined}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
-                    </>
-                  ) : null}
-                  <div
-                    className="relative z-10 p-6"
-                    style={
-                      item.coverImageUrl
-                        ? { color: item.cover.foreground }
-                        : undefined
-                    }
-                  >
-                    <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                      {item.category}
-                    </p>
-                    <h3 className="mt-3 text-2xl font-semibold">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-white/80">
-                      {item.summary ?? item.overview}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex h-full flex-col gap-4 p-6">
-                  <div className="flex items-center justify-between text-xs text-muted">
-                    <span>{item.role}</span>
-                    <span>{item.duration}</span>
-                  </div>
-                  <p className="text-sm text-muted">{item.overview}</p>
-                  <div className="mt-auto flex items-center gap-2 text-sm font-semibold text-ink">
-                    View case study
-                    <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
+              <ProjectCard key={item.slug} project={item} />
             ))}
           </div>
         </section>
