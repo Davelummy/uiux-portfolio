@@ -45,6 +45,9 @@ export function CaseStudyGallery({ gallery: media }: { gallery: ProjectMedia[] }
                 ? "(max-width: 944px) calc(100vw - 48px), 896px"
                 : "(max-width: 768px) 100vw, 50vw"}
               className="media-stage-image"
+              style={item.presentation === "capture" || !item.presentation
+                ? { maxHeight: "none", objectFit: "contain", transform: "none" }
+                : undefined}
             />
           </div>
           <figcaption className="media-stage-caption">
