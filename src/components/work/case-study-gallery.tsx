@@ -21,7 +21,9 @@ const gallery = {
 export function CaseStudyGallery({ gallery: media }: { gallery: ProjectMedia[] }) {
   return (
     <m.div
-      className="mt-4 grid gap-6 md:grid-cols-2"
+      className={media.length === 1
+        ? "mx-auto mt-4 grid max-w-4xl gap-6"
+        : "mt-4 grid gap-6 md:grid-cols-2"}
       variants={gallery}
       initial="hidden"
       whileInView="visible"
@@ -39,7 +41,9 @@ export function CaseStudyGallery({ gallery: media }: { gallery: ProjectMedia[] }
               alt={item.alt}
               width={item.width}
               height={item.height}
-              sizes="(max-width: 768px) 100vw, 50vw"
+              sizes={media.length === 1
+                ? "(max-width: 944px) calc(100vw - 48px), 896px"
+                : "(max-width: 768px) 100vw, 50vw"}
               className="media-stage-image"
             />
           </div>

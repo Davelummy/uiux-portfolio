@@ -46,7 +46,8 @@ describe("getProjectBySlug", () => {
       sourceUrl: "https://github.com/Davelummy/neon-breach",
       sourceCtaLabel: "View Source"
     });
-    expect(project?.gallery).toHaveLength(5);
+    expect(project?.gallery?.length).toBeGreaterThan(0);
+    expect(project?.gallery?.every((image) => image.presentation === "capture")).toBe(true);
   });
 
   it("places Threvelonbase first among non-featured published projects", async () => {

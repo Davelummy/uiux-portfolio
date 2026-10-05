@@ -522,42 +522,6 @@ const PROJECTS: Project[] = [
         presentation: "capture",
         width: 800,
         height: 600
-      },
-      {
-        src: "/projects/neon-breach-interceptor.webp",
-        alt: "Angular dark interceptor vehicle with cyan accent lights from Neon Breach",
-        caption: "Interceptor vehicle asset used in the game's vehicle phase.",
-        label: "PROCEDURAL VEHICLE",
-        presentation: "object",
-        width: 980,
-        height: 653
-      },
-      {
-        src: "/projects/neon-breach-interceptor-side.webp",
-        alt: "Side profile of the angular Neon Breach interceptor vehicle with cyan accent lights",
-        caption: "Side profile from the interceptor's vehicle asset study.",
-        label: "OBJECT STUDY / SIDE",
-        presentation: "object",
-        width: 980,
-        height: 464
-      },
-      {
-        src: "/projects/neon-breach-interceptor-rear.webp",
-        alt: "Rear view of the angular Neon Breach interceptor vehicle with cyan accent lights",
-        caption: "Rear profile from the interceptor's vehicle asset study.",
-        label: "OBJECT STUDY / REAR",
-        presentation: "object",
-        width: 980,
-        height: 653
-      },
-      {
-        src: "/projects/neon-breach-environment.webp",
-        alt: "Dark industrial wall material used to build Neon Breach environments",
-        caption: "A modular environment material from the renderer's asset set.",
-        label: "MATERIAL STUDY",
-        presentation: "material",
-        width: 512,
-        height: 512
       }
     ],
     isFeatured: false,
