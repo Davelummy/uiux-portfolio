@@ -47,7 +47,7 @@ function matchesQuery(project: Project, query: string) {
 export default function WorkGallery({ projects }: Props) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
-  const [viewMode, setViewMode] = useState<ViewMode>("list");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
 
   const stats = useMemo(() => {
     const categoryCount = new Set(
@@ -201,87 +201,58 @@ export default function WorkGallery({ projects }: Props) {
             ) : (
               <div
                 className={clsx(
-                  "mt-6 gap-6",
-                  viewMode === "grid"
-                    ? "columns-1 sm:columns-2 lg:columns-2 [&>*]:break-inside-avoid"
-                    : "grid grid-cols-1"
+                  "mt-6 grid gap-6",
+                  viewMode === "grid" ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"
                 )}
               >
                 {filteredProjects.map((project) => (
-                  <article key={project.id} className="mb-6">
-                      <Link
-                        href={`/work/${project.slug}`}
+                  <article key={project.id} className="min-w-0">
+                    <Link
+                      href={`/work/${project.slug}`}
+                      aria-label={`View ${project.title} case study`}
+                      className={clsx(
+                        "card group flex h-full overflow-hidden transition hover:-translate-y-1 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink",
+                        viewMode === "list" ? "flex-col sm:flex-row" : "flex-col"
+                      )}
+                    >
+                      <div
                         className={clsx(
-                          "card group flex h-full overflow-hidden transition hover:-translate-y-1.5 hover:shadow-md",
-                          viewMode === "list" ? "sm:flex-row" : "flex-col"
+                          "relative aspect-[16/10] shrink-0 overflow-hidden border-b border-border bg-[#f1eee9]",
+                          viewMode === "list" ? "sm:w-[42%] sm:border-b-0 sm:border-r" : "w-full"
                         )}
                       >
-                        <div
-                          className={clsx(
-                            "relative overflow-hidden",
-                            viewMode === "list" ? "sm:w-[40%] shrink-0" : ""
-                          )}
-                        >
-                          <div
-                            className={clsx(
-                              "relative p-6 text-white min-h-[200px] flex flex-col justify-end overflow-hidden",
-                              viewMode === "list" ? "sm:min-h-[220px]" : ""
-                            )}
-                          >
-                            {project.coverImageUrl ? (
-                              <>
-                                <Image
-                                  src={project.coverImageUrl}
-                                  alt={project.title}
-                                  fill
-                                  sizes="(max-width: 1024px) 100vw, 50vw"
-                                  className="object-cover"
-                                  placeholder={
-                                    project.blurDataUrl ? "blur" : "empty"
-                                  }
-                                  blurDataURL={project.blurDataUrl ?? undefined}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
-                              </>
-                            ) : (
-                              <div className="absolute inset-0" style={getCoverStyle(project)} />
-                            )}
-                            <p className="relative z-10 text-xs uppercase tracking-[0.2em] text-white/70">
-                              {project.category}
-                            </p>
-                            <h3 className="relative z-10 mt-1.5 text-xl font-semibold">
-                              {project.title}
-                            </h3>
-                            <p className="relative z-10 mt-1 text-sm text-white/80 line-clamp-2">
-                              {project.summary ?? project.overview}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 flex-col gap-3 p-5">
-                          <div className="flex flex-1 flex-col gap-3">
-                            <div className="flex items-center justify-between text-xs text-muted">
-                              <span>{project.role}</span>
-                              <span>{project.duration}</span>
-                            </div>
-                            <p className="text-sm text-muted leading-relaxed line-clamp-3">
-                              {project.overview}
-                            </p>
-                            <div className="flex flex-wrap gap-1.5">
-                              {project.tags.map((tag) => (
-                                <span key={tag} className="pill">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="mt-auto flex items-center gap-3 text-sm font-semibold text-ink">
-                            <span className="inline-flex items-center gap-2">
-                              View case study
-                              <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                            </span>
-                          </div>
-                        </div>
-                      </Link>
+                        {project.coverImageUrl ? (
+                          <Image
+                            src={project.coverImageUrl}
+                            alt={`${project.title} design preview`}
+                            fill
+                            sizes={viewMode === "grid"
+                              ? "(max-width: 767px) calc(100vw - 48px), (max-width: 1152px) calc((100vw - 72px) / 2), 540px"
+                              : "(max-width: 639px) calc(100vw - 48px), (max-width: 1152px) 42vw, 464px"}
+                            className="object-contain"
+                            placeholder={project.blurDataUrl ? "blur" : "empty"}
+                            blurDataURL={project.blurDataUrl ?? undefined}
+                          />
+                        ) : (
+                          <div className="absolute inset-0" style={getCoverStyle(project)} aria-hidden />
+                        )}
+                      </div>
+                      <div className="flex min-w-0 flex-1 flex-col p-5 sm:p-6">
+                        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                          {project.category}
+                        </p>
+                        <h3 className="mt-2 text-xl font-semibold leading-snug text-ink sm:text-2xl">
+                          {project.title}
+                        </h3>
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">
+                          {project.summary ?? project.overview}
+                        </p>
+                        <span className="mt-auto inline-flex items-center gap-2 pt-5 text-sm font-semibold text-ink">
+                          View case study
+                          <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
+                        </span>
+                      </div>
+                    </Link>
                   </article>
                 ))}
               </div>

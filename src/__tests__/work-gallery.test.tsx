@@ -35,10 +35,16 @@ describe("WorkGallery", () => {
     expect(matchEls.length).toBeGreaterThan(0);
   });
 
-  it("switches to grid view when grid button is clicked", () => {
+  it("starts in grid view and switches between list and grid", () => {
     render(<WorkGallery projects={projects} />);
     const gridBtn = screen.getByLabelText("grid view");
+    const listBtn = screen.getByLabelText("list view");
+    expect(gridBtn.getAttribute("aria-pressed")).toBe("true");
+    fireEvent.click(listBtn);
+    expect(listBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(gridBtn.getAttribute("aria-pressed")).toBe("false");
     fireEvent.click(gridBtn);
     expect(gridBtn.getAttribute("aria-pressed")).toBe("true");
+    expect(listBtn.getAttribute("aria-pressed")).toBe("false");
   });
 });
