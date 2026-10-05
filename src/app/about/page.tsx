@@ -17,16 +17,15 @@ export default function AboutPage() {
           </StaggerItem>
           <StaggerItem>
             <p className="mt-4 text-muted">
-              I&apos;m David Olumide Daniel, an Abuja-based Product Designer and Full-Stack
-              Developer. I focus on translating business goals into clear, user-centered
-              experiences—and bringing them to life with robust code.
+              I&apos;m David Olumide Daniel, an Abuja-based Product Designer with frontend
+              development capability. I focus on translating business goals into clear, user-centered
+              experiences—and bringing the agreed interfaces to life through frontend development.
             </p>
           </StaggerItem>
           <StaggerItem>
             <p className="mt-4 text-muted">
               Blending UX research, interaction design, and modern web development, I enjoy
-              collaborating closely with founders and teams to ship thoughtful, scalable,
-              and complete digital products from idea to production.
+              collaborating closely with founders and teams to ship thoughtful, usable digital experiences.
             </p>
           </StaggerItem>
         </div>
@@ -35,8 +34,8 @@ export default function AboutPage() {
           <div className="card p-6">
             <p className="eyebrow">Snapshot</p>
             <ul className="mt-4 space-y-3 text-sm text-muted">
-              <li>End-to-end product design and development.</li>
-              <li>Mobile-first UI and responsive full-stack architecture.</li>
+              <li>Product design with frontend delivery.</li>
+              <li>Mobile interface design and responsive web development.</li>
               <li>Collaborative partner capable of bridging design and engineering.</li>
             </ul>
             <div className="mt-6 flex flex-wrap gap-2">
@@ -66,11 +65,10 @@ export default function AboutPage() {
             <h2 className="text-2xl font-semibold">Capabilities</h2>
             <p className="mt-4 text-sm text-muted">
               I run lean discovery, map user journeys, and then actually build the
-              solutions. My dual skill set ensures that the design vision is perfectly
-              translated into performant, production-ready code.
+              solutions. I connect interaction design with frontend implementation so the decisions behind a screen can carry through to the working experience.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {["UI/UX Design", "Frontend Dev", "Backend Dev", "API Integration", "Design Systems"].map(
+              {["UI/UX Design", "Frontend Dev", "Design Systems"].map(
                 (item) => (
                   <span key={item} className="pill">
                     {item}

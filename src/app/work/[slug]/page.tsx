@@ -60,7 +60,6 @@ export default async function WorkDetailPage({ params }: Props) {
 
   if (!project) return notFound();
 
-  const clientLabel = project.client ?? project.title;
   const relatedProjects = (await getProjects({ publishedOnly: true }))
     .filter((item) => item.slug !== project.slug)
     .slice(0, 2);
@@ -120,43 +119,8 @@ export default async function WorkDetailPage({ params }: Props) {
         </div>
 
         <div className="card overflow-hidden">
-          <div
-            className="relative overflow-hidden"
-            style={project.coverImageUrl ? undefined : getCoverStyle(project)}
-          >
-            {project.coverImageUrl ? (
-              <>
-                <Image
-                  src={project.coverImageUrl}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                  placeholder={project.blurDataUrl ? "blur" : "empty"}
-                  blurDataURL={project.blurDataUrl ?? undefined}
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 via-slate-900/40 to-slate-900/80" />
-              </>
-            ) : null}
-            <div
-              className="relative z-10 p-6"
-              style={
-                project.coverImageUrl
-                  ? { color: project.cover.foreground }
-                  : undefined
-              }
-            >
-              <p className="text-xs uppercase tracking-[0.2em] text-white/70">
-                Case Study
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold">{clientLabel}</h2>
-              <p className="mt-2 text-sm text-white/80">
-                {project.summary ?? project.overview}
-              </p>
-              <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/70">
-                {project.year}
-              </p>
-            </div>
+          <div className="relative aspect-[4/3] bg-white">
+            {project.coverImageUrl ? <Image src={project.coverImageUrl} alt={`${project.title} design presentation`} fill sizes="(max-width: 1024px) 100vw, 45vw" className="object-contain p-4" priority /> : <div className="absolute inset-0" style={getCoverStyle(project)} />}
           </div>
           <div className="p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -250,9 +214,9 @@ export default async function WorkDetailPage({ params }: Props) {
           { label: "Overview", href: "#overview" },
           { label: "Problem", href: "#problem" },
           { label: "Goals", href: "#goals" },
-          { label: "Approach", href: "#approach" },
+          { label: "Design decisions", href: "#approach" },
           { label: "Solution", href: "#solution" },
-           { label: "Outcome", href: "#outcome" },
+           { label: "Delivered output", href: "#outcome" },
            ...(project.gallery?.length
              ? [{ label: "Gallery", href: "#gallery" }]
              : []),
@@ -302,7 +266,7 @@ export default async function WorkDetailPage({ params }: Props) {
           </ul>
         </div>
         <div id="approach" className="section-anchor card p-6">
-          <h2 className="text-2xl font-semibold">Approach</h2>
+          <h2 className="text-2xl font-semibold">Design decisions</h2>
           <div className="mt-4 space-y-4 text-sm text-muted">
             {project.approach.map((step, index) => (
               <div key={step.title}>
@@ -329,7 +293,7 @@ export default async function WorkDetailPage({ params }: Props) {
           </ul>
         </div>
         <div id="outcome" className="section-anchor card p-6">
-          <h2 className="text-2xl font-semibold">Outcome</h2>
+          <h2 className="text-2xl font-semibold">Delivered output</h2>
           <p className="mt-3 text-sm text-muted">{project.outcome}</p>
            <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {project.metrics.map((metric) => (
@@ -424,6 +388,12 @@ export default async function WorkDetailPage({ params }: Props) {
         )}
        </section>
        </FadeIn>
+
+      <section className="card mt-12 p-7">
+        <h2 className="text-2xl font-semibold">Have a related design challenge?</h2>
+        <p className="mt-3 text-sm text-muted">Share what you are working on. We can discuss the scope and where design or frontend delivery would help.</p>
+        <Link href="/contact?intent=project" className="btn btn-primary mt-5">Choose how to get in touch</Link>
+      </section>
 
       {relatedProjects.length > 0 && (
         <FadeIn className="mt-16">

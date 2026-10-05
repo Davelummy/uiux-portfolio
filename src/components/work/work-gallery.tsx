@@ -50,14 +50,6 @@ export default function WorkGallery({ projects }: Props) {
   const [viewMode, setViewMode] = useState<ViewMode>("list");
 
   const stats = useMemo(() => {
-    const clientCount = new Set(
-      projects
-        .map((project) => project.client)
-        .filter(
-          (value): value is string =>
-            Boolean(value) && value !== "Independent Project",
-        ),
-    ).size;
     const categoryCount = new Set(
       projects
         .map((project) => project.category)
@@ -65,7 +57,7 @@ export default function WorkGallery({ projects }: Props) {
     ).size;
     return [
       { value: `${projects.length}`, label: "Case Studies" },
-      { value: `${clientCount}`, label: "Client Partners" },
+      { value: "Web & Mobile", label: "Design Platforms" },
       { value: `${categoryCount}`, label: "Disciplines" }
     ];
   }, [projects]);
@@ -307,7 +299,7 @@ export default function WorkGallery({ projects }: Props) {
                 tailored to your timeline.
               </p>
               <Link href="/contact" className="btn btn-primary mt-2">
-                Book a Project Call
+                Choose how to get in touch
               </Link>
             </div>
           </FadeIn>

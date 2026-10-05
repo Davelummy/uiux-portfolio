@@ -4,7 +4,7 @@ import { FadeIn } from "@/components/ui/fade-in";
 
 export const metadata: Metadata = {
   title: "Thank You | David Olumide Daniel",
-  description: "Your inquiry has been sent. I'll respond within 48 hours."
+  description: "Your enquiry has been submitted."
 };
 
 export default function ContactThanksPage() {
@@ -17,8 +17,7 @@ export default function ContactThanksPage() {
           Your inquiry has been sent.
         </h1>
         <p className="max-w-2xl text-muted">
-          Thanks for reaching out. I&apos;ll review your message and respond
-          within 48 hours.
+          If you have just submitted the contact form, I will review your message and reply by email.
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           <Link href="/work" className="btn btn-ghost">

@@ -15,15 +15,15 @@ import { FadeIn } from "@/components/ui/fade-in";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "David Olumide Daniel | Product Designer & Software Engineer",
+  title: "David Olumide Daniel | Product Designer & Frontend Developer",
   description:
-    "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production.",
+    "Abuja-based Product Designer and Frontend Developer crafting clear, accessible digital products from first flow to production.",
   robots: { index: true, follow: true },
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "David Olumide Daniel | Product Designer & Software Engineer",
+    title: "David Olumide Daniel | Product Designer & Frontend Developer",
     description:
-      "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production.",
+      "Abuja-based Product Designer and Frontend Developer crafting clear, accessible digital products from first flow to production.",
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -32,9 +32,9 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "David Olumide Daniel | Product Designer & Software Engineer",
+    title: "David Olumide Daniel | Product Designer & Frontend Developer",
     description:
-      "Abuja-based Product Designer and Software Engineer crafting clear, accessible digital products from first flow to production."
+      "Abuja-based Product Designer and Frontend Developer crafting clear, accessible digital products from first flow to production."
   }
 };
 
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <Link href="/" className="flex items-center gap-3 transition-transform hover:-translate-y-0.5">
                   <span className="text-lg font-semibold">David Olumide</span>
                   <span className="hidden text-sm text-muted sm:inline">
-                    Design Engineer
+                    Product design & frontend
                   </span>
                 </Link>
 
@@ -71,6 +71,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 >
                   <Link href="/work" className="transition hover:text-accent">
                     Work
+                  </Link>
+                  <Link href="/hiring" className="transition hover:text-accent">
+                    Hiring
                   </Link>
                   <Link href="/about" className="transition hover:text-accent">
                     About
@@ -82,7 +85,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
                 <div className="hidden items-center gap-3 sm:flex">
                   <Link href="/contact" className="btn btn-ghost">
-                    Contact
+                    Get in touch
                   </Link>
                   <Link href="/work" className="btn btn-primary">
                     View Work
@@ -103,7 +106,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                          "@id": `${SITE_URL}/#person`,
                          name: SITE_NAME,
                          url: SITE_URL,
-                         jobTitle: "Product Designer and Software Engineer",
+                         jobTitle: "Product Designer and Frontend Developer",
                          email: "mailto:Davidolumide123@gmail.com",
                          sameAs: ["https://www.behance.net/davelummy"]
                        },
@@ -127,13 +130,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <div>
                   <p className="text-sm font-semibold">David Olumide Daniel</p>
                   <p className="mt-2 text-muted">
-                    Product Designer and Full-Stack Engineer bridging the gap between 
-                    clear, calm interfaces and robust, scalable architectures.
+                    Clear websites and product interfaces, from design decisions to frontend delivery.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-4 text-sm text-muted md:justify-center">
                   <Link href="/work" className="transition hover:text-accent">
                     Work
+                  </Link>
+                  <Link href="/hiring" className="transition hover:text-accent">
+                    Hiring
                   </Link>
                   <Link href="/about" className="transition hover:text-accent">
                     About

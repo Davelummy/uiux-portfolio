@@ -203,7 +203,7 @@ const PROJECTS: Project[] = [
     title: "Crystalline Max",
     client: "Crystalline Max (CTMDS)",
     year: "2025",
-    category: "Frontend",
+    category: "Web Design",
     role: "UI/UX Designer & Front-End Developer",
     duration: "4 weeks",
     tools: ["Figma", "React", "Next.js", "Tailwind CSS", "Framer Motion"],
@@ -264,16 +264,19 @@ const PROJECTS: Project[] = [
       background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #e94560 100%)",
       foreground: "#ffffff"
     },
-    coverImageUrl: "/projects/crystalline-max.jpg",
+    coverImageUrl: "/projects/crystalline-max-live.jpg",
     blurDataUrl: BLUR_DATA_URL,
     behanceUrl: null,
     figmaEmbed: null,
     liveUrl: "https://ctmds.co.uk/",
+    gallery: [
+      { src: "/projects/crystalline-max-live.jpg", alt: "Current Crystalline Max website with service navigation and a WhatsApp enquiry action", caption: "Current live website captured on 5 October 2026. Service navigation and a visible enquiry action connect the offer to the next step.", label: "CURRENT LIVE WEBSITE", presentation: "capture", width: 1265, height: 889 }
+    ],
     isFeatured: true,
     isPublished: true,
     sortOrder: 3,
     createdAt: "2025-01-15",
-    updatedAt: "2026-04-19"
+    updatedAt: "2026-10-05"
   },
   {
     id: "voices-unbroken",
