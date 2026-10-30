@@ -49,7 +49,9 @@ describe("contact choices", () => {
     fireEvent.click(screen.getByRole("button", { name: "Send enquiry" }));
     expect(await screen.findByText("Your enquiry has been submitted.")).toBeVisible();
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2));
+    expect(vi.mocked(fetch).mock.calls[1][0]).toBe("/api/contact");
     const options = vi.mocked(fetch).mock.calls[1][1]!;
+    expect(options.headers).toMatchObject({ Accept: "application/json" });
     const body = new URLSearchParams(options.body as string);
     expect(body.get("intent")).toBe("project");
     expect(body.get("method")).toBe("form");

@@ -10,6 +10,13 @@ type FormValues = { name: string; email: string; message: string; timing: string
 const email = "Davidolumide123@gmail.com";
 const fieldClass = "w-full rounded-xl border border-border bg-white px-4 py-3 text-base text-ink";
 
+function getFormEndpoint() {
+  if (typeof window === "undefined") return "/api/contact";
+
+  const hostname = window.location.hostname;
+  return hostname.endsWith(".netlify.app") ? "/__forms.html" : "/api/contact";
+}
+
 export function ContactChoices() {
   const params = useSearchParams();
   const queryIntent = params.get("intent");
@@ -40,10 +47,11 @@ export function ContactChoices() {
   async function onSubmit(data: FormValues) {
     setStatus("idle");
     try {
+      const endpoint = getFormEndpoint();
       const body = new URLSearchParams({ "form-name": "contact", name: data.name, email: data.email,
         project: `${intent === "hiring" ? "Hiring opportunity" : "Design project"}${method === "call" ? " — call requested" : ""}`,
         message: data.message, intent, method: method ?? "form", timing: data.timing || "Not specified", "bot-field": data["bot-field"] || "" });
-      const response = await fetch("/__forms.html", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: body.toString() });
+      const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" }, body: body.toString() });
       if (!response.ok) throw new Error("Submission failed");
       setStatus("success");
     } catch { setStatus("error"); }
