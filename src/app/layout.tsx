@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
 import {
   BehanceIcon,
   MailIcon,
@@ -182,6 +183,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
           </SmoothScrollProvider>
         </MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
